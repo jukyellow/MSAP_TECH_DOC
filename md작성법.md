@@ -31,7 +31,7 @@ test..2
 
 [link] https://github.com/jukyellow/MSAP_DOC/
 
-[이동](https://github.com/jukyellow/MSAP_DOC/ "링크 제목 ")
+링크제목 지정: [이동](https://github.com/jukyellow/MSAP_DOC/ "링크 제목 ")
 
 *강조*
 
