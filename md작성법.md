@@ -30,7 +30,8 @@ test..2
 </pre>
 
 [link] https://github.com/jukyellow/MSAP_DOC/
-[](https://github.com/jukyellow/MSAP_DOC/)
+
+[링크설명] (https://github.com/jukyellow/MSAP_DOC/)
 
 *강조*
 
