@@ -31,7 +31,7 @@ test..2
 
 [link] https://github.com/jukyellow/MSAP_DOC/
 
-[링크설명] (https://github.com/jukyellow/MSAP_DOC/)
+[링크 설명] https://github.com/jukyellow/MSAP_DOC/
 
 *강조*
 
