@@ -43,4 +43,7 @@ test..2
 
 <hr />
 ### 이미지 업로드 테스트
-![image](https://user-images.githubusercontent.com/45334819/53697538-7d5d1b80-3e15-11e9-8224-467541d563ab.png)
+
+ ![image](https://user-images.githubusercontent.com/45334819/53697538-7d5d1b80-3e15-11e9-8224-467541d563ab.png)
+
+[image](https://user-images.githubusercontent.com/45334819/53697538-7d5d1b80-3e15-11e9-8224-467541d563ab.png)
