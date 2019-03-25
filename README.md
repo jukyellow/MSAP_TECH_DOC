@@ -3,6 +3,8 @@
 #### MSAP(Micro Serice API Platform) 프로젝트 개발에 사용된 주요기술요소 설명을 위한 레파지토리 입니다.
 ##### 요소기술에 대한 전반적인 이해보다, MSAP 개발에 사용된 기능위주의 설명으로 채워질 예정입니다.
 
+![image](https://user-images.githubusercontent.com/45334819/54955639-33d59b80-4f91-11e9-9d63-db9609926fac.png)
+
 <hr />
 
 ## 개요
