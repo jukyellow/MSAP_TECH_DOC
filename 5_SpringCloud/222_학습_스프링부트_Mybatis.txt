@@ -1,0 +1,32 @@
+
+1)스프링 Mybatis XML선언 방법 및 Annotation 선언 사용방법
+http://www.mybatis.org/spring/ko/mappers.html
+
+2)Mabatis에서 지원하는방법(Mapper)
+>설명 : @Mapper로 선언하고 @Autowired하면 의존성주입(DI)으로 클래스 생성없이 사용가능한 이유
+>비교 : sqlSessionTempalte를 사용하면 별도의 class선언이 필요없고, Mapper를 사용하면 interface클래스 선언이 필요
+http://wiki.sys4u.co.kr/pages/viewpage.action?pageId=7767258
+
+
+-스프링부트 + Mybatis 심플예제
+
+1)Mapper예제
+http://itcoolly.tistory.com/148
+>namespace에는 Mapper Interface를 적어주게 되면 
+  Interface 내의 Method Name 과 Xml내의 id 값이 일치하면 자동으로 맵핑 시켜준다.
+  namespace가 헷갈릴수도 있는데 xml이 아닌 interface위치를 맵핑시켜주면 된다.
+
+http://jsijsi99.tistory.com/8
+
+-스프링부트 + Mybatis 상세예제
+https://m.blog.naver.com/PostView.nhn?blogId=islove8587&logNo=220989983084&proxyReferer=https%3A%2F%2Fwww.google.com%2F
+
+
+2)sqlSessionTemplate예제
+https://araikuma.tistory.com/484
+>mapper, sqlSession 모두 사용예제
+
+http://jsonobject.tistory.com/225
+
+http://wonwoo.ml/index.php/post/1119
+>mybatis.mapper-locations 설정등 설명

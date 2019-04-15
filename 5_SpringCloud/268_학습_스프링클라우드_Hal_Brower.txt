@@ -1,0 +1,13 @@
+https://blog.aliencube.org/ko/2015/08/16/applying-hal-to-rest-api/
+>hal 설명: Hypertext Application Language
+>REST API를 제공하는 서비스들의 경우에는 Response 메시지에 단순히 응답 객체만 담을 수도 있겠지만 
+부가적인 메타 정보들도 담아서 연관된 다른 API를 손쉽게 사용할 수 있게끔 설계하는 경우도 볼 수 있는데, 
+이런 경우에는 개발자들 입장에서는 굉장한 개발 경험의 상승효과를 누릴 수 있다. 
+
+https://jistol.github.io/java/2017/03/24/spring-data-rest-introduce-and-sample/
+>hal 사용사례
+
+적용방법:
+ >https://www.baeldung.com/spring-rest-hal
+ >접속경로: http://localhost:8081/browser/index.html
+ >디테일 설명: https://www.novatec-gmbh.de/en/blog/including-hal-browser-spring-boot-without-using-spring-data-rest/

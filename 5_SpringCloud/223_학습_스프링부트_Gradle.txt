@@ -1,0 +1,6 @@
+gradle.build
+ >한글깨짐 해소 : [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+
+settings.gradle
+ >멀티프로젝트 구성시 설정

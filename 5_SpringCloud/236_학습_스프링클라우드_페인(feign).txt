@@ -1,0 +1,72 @@
+0.참고자료
+1)자바기반의 마이크로서비스 이해와 아키텍처 구축하기
+>https://github.com/architectstory/msa-architecture-eureka-server 
+2)마스터링 스프링클라우드
+>https://github.com/piomin/sample-spring-cloud-netflix/tree/cluster/sample-discovery-service (3중화 : 멀티 zone구성)
+
+
+
+-유레카설명: 마이크로 서비스가 추가될때, 자동으로 서비스 디스커버리(유레카)서버에 등록해주고,
+                게이트웨이(zuul)서버에서 라우팅시 해당 마이크로서비스를 찾도록 도와줌
+
+------------------------------------------------------------------------------------------------------------
+
+1-2) dependency
+
+1-2-1) 버전 (마스터링 스프링 클라우드)
+sourceCompatibility = 1.8
+springBootVersion = '1.5.10.RELEASE'
+springCloudVersion = 'Edgware.SR2'
+
+1-2-2) 라이브러리 (자바기반의 마이크로...구축하기)
+compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.kafka:spring-kafka:1.3.2.RELEASE')
+	compile('com.h2database:h2:1.4.197') 
+	
+	compile('org.springframework.boot:spring-boot-actuator:1.5.10.RELEASE')
+	compile('org.springframework.cloud:spring-cloud-starter-config:1.4.4.RELEASE')
+	compile('org.springframework.cloud:spring-cloud-starter-eureka:1.4.5.RELEASE')
+	compile('org.springframework.cloud:spring-cloud-starter-hystrix:1.4.5.RELEASE')
+	compile('org.springframework.cloud:spring-cloud-starter-feign:1.4.5.RELEASE')
+}
+
+
+2. config(yml) & annotations
+
+2-1) yml (자바기반의 마이크로...구축하기)
+------------------------------------------------------------------------------
+>client측 application.yml (싱글 zone 예제)
+server:
+  port: 8080
+  
+spring:
+  application:
+    name: msa-service-coffee-order
+  
+#Config Server      
+  cloud:
+    config:
+      uri: http://localhost:8888 
+      name: msa-architecture-config-server
+
+#Eureka Client   
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9091/eureka/
+
+>멀티 ZONE 예제(로드밸런싱?) :  https://github.com/piomin/sample-spring-cloud-comm/blob/feign_with_inheritance/order-service/src/main/resources/application.yml
+------------------------------------------------------------------------------
+
+2-2) annotation (자바기반의 마이크로...구축하기)
+>서버적용: @EnableFeignClients, @EnableEurekaClient
+
+@FeignClient("msa-service-coffee-member")
+public interface IMsaServiceCoffeeMember{
+
+	@RequestMapping(value = "/coffeeMember/v1.0/{memberName}", method = RequestMethod.GET)
+	boolean coffeeMember(@PathVariable("memberName") String memberName);
+}
+
+>추가기능

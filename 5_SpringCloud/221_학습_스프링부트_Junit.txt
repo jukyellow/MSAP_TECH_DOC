@@ -1,0 +1,42 @@
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-test</artifactId>
+	<version>1.5.3.RELEASE</version>
+</dependency>
+----------------------------------------------------------------------
+@SpringBootApplication
+@RunWith(SpringRunner.class)
+@SpringBootTest 
+public class jdbcConnTest 	{
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	
+	@Test
+	public void testJdbcConn() {
+		String apiId = "acps_v1_user_name";
+		String API_WEB_PORT = jdbcTemplate.queryForObject("select count(*) cnt from dual", String.class);
+        System.out.println("call getApiPort!!!:"+ API_WEB_PORT);
+	}
+	
+	@Test
+	public void testQuery() {
+		String apiId = "acps_v1_user_name";
+		String API_WEB_PORT = jdbcTemplate.queryForObject("select API_WEB_PORT from MS_API_INFO where API_ID = ?", String.class, apiId);
+		System.out.println("call getApiPort2:"+ API_WEB_PORT);
+	}
+}
+---------------------------------------------------------------------
+설명:
+@RunWith는 JUnit 프레임워크의 테스트 실행 방법을 확장할 때 사용하는 애노테이션이다. 
+ SpringJUnit4ClassRunner라는 JUnit용 테스트 컨텍스트 프레임워크 확장 클래스를 지정해주면 JUnit이 테스트를 진행하는 중에 테스트가 사용할 애플리케이션 컨텍스트를 만들과 관리하는 작업을 진행해준다.
+@ContextConfiguration은 자동으로 만들어줄 애플리케이션 컨텍스트의 설정파일위치를 지정한 것이다.
+스프링의 JUnit 확장기능은 테스트가 실행되기 전에 딱 한 번만 애플리케이션 컨텍스트를 만들어두고, 
+테스트 오브젝트가 만들어질 때마다 특별한 방법을 이용해 애플리케이션 컨텍스트 자신을 테스트 오브젝트의 특정 필드에 주입해주는 것이다.
+
+추가로 @ContextConfiguration와 @SpringApplicationConfiguration를 비교:
+@ContextConfiguration의 locations 속성에는 xml형태의 애플리케이션 컨텍스트만 로딩 가능한 것 같다
+(class파일을 지정하니 오류 발생)
+>@ContextConfiguration(locations="applicationContext.xml")
+
+@SpringApplicationConfiguration은 Spring Boot에서 class형태의 애플리케이션 컨텍스트를 로딩 할 수 있는것 같다.
+>@SpringApplicationConfiguration(classes = App.class)

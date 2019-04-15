@@ -1,0 +1,45 @@
+>Spring Boot with Docker 가이드 (부트에서 도커 이미지 빌드하기)
+https://spring.io/guides/gs/spring-boot-docker/
+>적용샘플 따라하기
+https://medium.com/@hudsonmendes/docker-spring-boot-microservice-with-gradle-9785087e7992
+
+
+------------------------------------------------------------
+>build.gradle
+
+buildscript {
+    ...
+    dependencies {
+        ...
+        classpath('gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.13.0')
+    }
+}
+
+group = 'springio'
+
+...
+apply plugin: 'com.palantir.docker'
+
+task unpack(type: Copy) {
+    dependsOn bootJar
+    from(zipTree(tasks.bootJar.outputs.files.singleFile))
+    into("build/dependency")
+}
+docker {
+    name "${project.group}/${bootJar.baseName}"
+    copySpec.from(tasks.unpack.outputs).into("dependency")
+    buildArgs(['DEPENDENCY': "dependency"])
+}
+------------------------------------------------------------
+>도커파일
+
+FROM openjdk:8-jdk-alpine
+VOLUME /tmp
+ARG JAR_FILE
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+
+------------------------------------------------------------
+>빌드
+
+$ ./gradlew build docker

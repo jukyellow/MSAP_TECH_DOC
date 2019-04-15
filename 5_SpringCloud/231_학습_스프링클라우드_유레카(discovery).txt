@@ -1,0 +1,73 @@
+0.참고자료
+1)자바기반의 마이크로서비스 이해와 아키텍처 구축하기
+>https://github.com/architectstory/msa-architecture-eureka-server 
+2)마스터링 스프링클라우드
+>https://github.com/piomin/sample-spring-cloud-netflix/tree/cluster/sample-discovery-service (3중화 : 멀티 zone구성)
+
+참고1. netflix-erureka와 그냥 erureka를 구별해서 얘기함
+ => 차이는 없다고 얘기하는데?(버전업시 이름만 변경)
+ => spring-boot-starter-parent를 상속받아 사용하면 spring boot의 dependency 관리 지원을 받을 수 있다. ?
+ => 릴리즈 버전확인(https://github.com/spring-projects/spring-cloud/wiki/Spring-Cloud-Edgware-Release-Notes)
+  참고. https://eglowc.tistory.com/38
+참고2. docker image를 maven에서 build하여 생성하는 레퍼런스 제공
+ =>https://spring.io/guides/gs/spring-boot-docker/
+
+-유레카설명: 마이크로 서비스가 추가될때, 자동으로 서비스 디스커버리(유레카)서버에 등록해주고,
+                게이트웨이(zuul)서버에서 라우팅시 해당 마이크로서비스를 찾도록 도와줌
+
+------------------------------------------------------------------------------------------------------------
+
+1-1) 환경세팅(dashboard는 안나와서 구글링해서 해결)
+ >dependency: spring-cloud-starter-eureka-server 사용시 dashboard 확인가능
+ >버전 다운그레이드 해야한다고함 : https://stackoverflow.com/questions/50069134/unable-to-render-eureka-dashboard
+Spring boot starter parent: Use <version>1.5.10.RELEASE</version>
+Spring cloud version: Use <spring-cloud.version>Edgware.SR3</spring-cloud.version>
+In dependency for Eureka Server: Use <artifactId>spring-cloud-starter-eureka-server</artifactId>
+ >패키지 변경(ServletInitializer 클래스)
+ >xml로 표시되는경우 -> template 폴더 삭제
+
+1-2) dependency
+
+1-2-1) 버전 (마스터링 스프링 클라우드)
+sourceCompatibility = 1.8
+springBootVersion = '1.5.10.RELEASE'
+springCloudVersion = 'Edgware.SR2'
+
+1-2-2) 라이브러리 (자바기반의 마이크로...구축하기)
+	compile('org.springframework.boot:spring-boot-starter-actuator')
+	compile('org.springframework.cloud:spring-cloud-starter-config')
+	compile('org.springframework.cloud:spring-cloud-starter-eureka-server')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+
+2. config(yml) & annotations
+
+2-1) yml (자바기반의 마이크로...구축하기)
+------------------------------------------------------------------------------
+>유레카서버 application.yml (싱글 zone 예제)
+server:
+  port: 9091
+spring:
+  application:
+    name: msa-architecture-eureka-server
+#Config Server      
+  cloud:
+    config:
+      uri: http://localhost:8888 
+      name: msa-architecture-config-server
+#Eureka Standalone Server       
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://localhost:${server.port}/eureka/
+
+>멀티 ZONE 예제(3중화) :  https://github.com/piomin/sample-spring-cloud-netflix/blob/cluster/sample-discovery-service/src/main/resources/application.yml
+------------------------------------------------------------------------------
+
+2-2) annotation (자바기반의 마이크로...구축하기)
+>서버적용: @EnableEurekaServer
+>추가기능
+

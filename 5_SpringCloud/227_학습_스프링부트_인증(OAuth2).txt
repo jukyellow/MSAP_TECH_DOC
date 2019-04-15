@@ -1,0 +1,14 @@
+-기본 참조 프로젝트: 스프링 security 프로젝트
+-https보안
+-ssl구성 영역: 서비스 디스커버리(유레카), config서버 등
+-API 테스트: postman(https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop)
+-참고:
+>인증발전역사(정독할필요있음): https://www.sauru.so/blog/basic-of-oauth2-and-jwt/
+>OAuth2 설명: https://brunch.co.kr/@sbcoba/4
+
+-인증절차(2단계) 
+1)ID/PW 또는 미리 발급받은 ID/시크릿key 요청
+2)토큰발급받아 헤더에 토큰정보로 요청
+
+=> 1단계를 건너띄기위해 세션관리가 필요? 
+=> 무조건 토큰으로 통신하기때문에 인증뒤에는 세션관리 불필요??

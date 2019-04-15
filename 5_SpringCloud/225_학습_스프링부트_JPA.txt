@@ -1,0 +1,51 @@
+application.properties 설정:
+#database
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://192.168.0.7:3306/apigw?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC
+spring.datasource.username=gwadmin
+spring.datasource.password=gwadmin
+#jpa
+spring.jpa.database=mysql
+spring.jpa.show-sql=true
+logging.level.org.hibernate = info
+
+구현:
+
+1)interface객체추가
+public interface AgwRepository extends CrudRepository<ApiInfo, String>{
+	List<ApiInfo> findListByApiId(String apiId);
+	ApiInfo findOneByApiId(String apiId);
+}
+
+2)domain? model객체추가(db테이블과 연결되는)
+@Entity
+@Table(name="MS_API_INFO")
+public class ApiInfo {	
+	@Id
+	private String apiId;
+	private String apiWebPort;
+	private String apiWasPort;
+	private LocalDateTime insertDate;
+	//@Column(length=20, nullable=false)
+	
+	public ApiInfo() {}
+	public ApiInfo(String apiId, String apiWebPort, String apiWasPort) {
+        this.apiId = apiId;
+        this.apiWebPort = apiWebPort;
+        this.apiWasPort = apiWasPort;
+        this.insertDate = LocalDateTime.now();
+    }
+	
+	public String getApiWebPort() {
+		return apiWebPort;
+	}
+}
+
+3)사용(junit)
+@Test
+	public void testJpa() {
+		String apiId = "acps_v1_user_name";
+		ApiInfo apiInfo = agwRepogitory.findOneByApiId(apiId);
+		System.out.println("apiInfo.getApiWebPort():"+ apiInfo.getApiWebPort());
+		assertEquals(String.valueOf(9001), apiInfo.getApiWebPort());
+	}

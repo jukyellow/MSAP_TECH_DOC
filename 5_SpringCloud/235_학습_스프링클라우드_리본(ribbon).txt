@@ -1,0 +1,49 @@
+0.참고자료
+1)자바기반의 마이크로서비스 이해와 아키텍처 구축하기
+>https://github.com/architectstory/msa-book/blob/master/msa-service-coffee-order/src/main/java/com/hoony/msa/springboot/service/IMsaServiceCoffeeMember.java
+2)마스터링 스프링클라우드
+>https://github.com/piomin/sample-spring-cloud-comm/tree/ribbon_with_discovery
+그외): https://supawer0728.github.io/2018/03/11/Spring-Cloud-Ribbon%EA%B3%BC-Eureka/
+
+*리본설명: 클라이언트 측 로드밸런서(내가 직전에 보낸경로를 기억했다가 다음번에 다른곳으로 분산)
+ >MS간 연계에는 보통 유레카+페인의 조합이 많은듯함
+기능1) 부하분산기: MS->MS간 커뮤니케이션시 미리 설정해둔 인스턴스 만큼 부하를 자동으로 분산(라운드로빈등)
+기능2) 서킷브레이크 및 재시도: timeout등 설정하여 서킷브레이크 및 재시도 설정에 따라 재요청 시도
+기능3) 라우팅: 유레카기능off, 서비스ID로 라우팅
+----------------------------------------------------------------------------------------------
+
+1. dependency
+
+1-1) 버전(마스터링 스프링클라우드)
+-<java.version>1.8</java.version>
+-springBootVersion = '1.5.6.RELEASE'
+-springCloudVersion = 'Dalston.SR4'
+
+1-2) 라이브러리 (자바기반 마이크로.. 구축하기)
+ 생략
+
+2. config & annotaion
+
+2-1) yml 
+ -----------------------------------------------------------
+>config서버 application.yml
+A. listOfServers: localhost:8081  => 설정하거나,
+B. 리본선언없이 유레카+Resttemplate...
+
+
+ -----------------------------------------------------------
+
+2-2) java 
+-서버구동: 리본 Annotation없이 유레카만 등록(@EnableDiscoveryClient)해도됨? +  @LoadBalanced + restTemplate 
+(유레카를 사용하면 @RibbonClients는 제외?)
+
+>https://github.com/piomin/sample-spring-cloud-comm/blob/ribbon_with_discovery/order-service/src/main/java/pl/piomin/services/order/OrderApplication.java
+
+@EnableDiscoveryClient
+public class OrderApplication {
+
+	@LoadBalanced
+	@Bean
+	RestTemplate restTemplate() {
+		return new RestTemplate();
+	}

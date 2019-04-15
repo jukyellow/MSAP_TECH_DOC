@@ -1,0 +1,67 @@
+1. gradle 설정
+>repositories추가 : maven { url "https://repo.spring.io/milestone" }
+>dependency{
+	implementation('org.springframework.cloud:spring-cloud-starter-netflix-hystrix') //Hystrix
+	implementation('org.springframework.cloud:spring-cloud-starter-netflix-hystrix-dashboard')
+	implementation('org.springframework.boot:spring-boot-starter-actuator')	//hystrix.stream 사용위해 필요
+	implementation('org.springframework.cloud:spring-cloud-starter-netflix-turbine') //turbine(터빈)
+}
+
+2. annotation 선언
+2-1)SpringBootApplication위치에
+ @EnableCircuitBreaker
+ @EnableHystrixDashboard
+ @EnableTurbine
+
+2-2) Fallback 메소드를 적용할 메소드에
+ @HystrixCommand(fallbackMethod = "routeFallback")
+ 단, 해당 클래스는 Component or Service 클래스여야
+
+2-3) Fallback메소드, Annotaiton에 선언한 이름으로
+ ex) public HttpURLConnection routeFallback(String msUrlStr, JSONObject jsonObj, String USER_ID) {
+
+
+3. 캐시 데이터를 사용해 폴백 구현
+ >설명:  폴백메소드에서 캐시의 data를 가져와서 반환하는 방식
+
+
+4. 서킷브레이커 차단하기
+ >@HystrixProperty사용
+ex 선언) @HystrixCommand(fallbakMethod="", commandProperties= { @HystrixProperty(설정)... })
+ex 설정1) @HystrixProperty(name="execution.isolation.thread.timeoutMilliseconds" value="500") 기본 1000임
+ex 설정2) threadPoolProperties = {
+            @HystrixProperty(name = "coreSize", value = "30"),
+            @HystrixProperty(name = "maxQueueSize", value = "101"),
+            @HystrixProperty(name = "keepAliveTimeMinutes", value = "2"),
+            @HystrixProperty(name = "queueSizeRejectionThreshold", value = "15"),
+            @HystrixProperty(name = "metrics.rollingStats.numBuckets", value = "12"),
+            @HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "1440")})
+ >참고: https://supawer0728.github.io/2018/03/11/Spring-Cloud-Hystrix/
+
+
+5. Hystrix Dashboard 관련 Application.properties설정
+
+ > application.properties설정추가(endpoints활성화)
+    management.endpoints.web.exposure.include=*
+    (management.endpoints.web.exposure.include= hystrix.stream)
+ >유레카 설정은 꺼두기
+   eureka.client.register-with-eureka=false
+   eureka.client.fetch-registry=false
+ > 접속경로
+   > http://localhost:8081/hystrix
+   > monitor 경로: http://localhost:8081/actuator/hystrix.stream
+ > 참고 endpoint 활성화
+  :http://wonwoo.ml/index.php/post/1947
+  :http://www.libqa.com/wiki/732
+
+ *Turbine은 동작못시켜봄(2019/01/09)
+   >Turbine
+  turbine.aggregator.clusterConfig=app-local,app-prod
+  turbine.instanceUrlSuffix.app-local=:8081/hystrix.stream
+  turbine.ConfigPropertyBasedDiscovery.app-local.instances=127.0.0.1
+  turbine.instanceUrlSuffix.app-prod=/hystrix.stream
+  turbine.ConfigPropertyBasedDiscovery.app-prod.instances=111.0.0.1:8001,111.0.0.1:8002
+
+---------------------------------------------------------------------
+메뉴얼 hystrix: https://github.com/Netflix/Hystrix/wiki/Configuration
+메뉴얼 turbin:  https://github.com/Netflix/Turbine/wiki/Getting-Started-(1.x)

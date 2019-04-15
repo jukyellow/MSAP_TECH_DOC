@@ -1,0 +1,20 @@
+-세션의 필요이유: 
+1)서버가 다운되었을때 살아있는 이중화서버로 넘어가서 세션을 유지하기 위함
+   =>OAuth2방식(토큰)인경우, 다른서버로 넘어가도 토큰만 제대로 됬다면 통과되기때문에 RestAPI에서 세션관리 불필요?
+2)인증권한의 유지??: 한번의 요청에서 인증서버로 인증받은뒤(토큰획득), 서비스응답뒤에
+                          두번째 요청이 들어오는경우 인증을 유지하고있으면 인증서버 경유 생략가능??
+    =>OAuth2방식(토큰) 방식인경우, 1차로 인증받고, 2차로 토큰으로 인가받아서 MS서비스로 내려감
+        그래서 토큰만 획득한 상태라면, 세션유지가 불필요?
+
+-스케일 아웃을 위한 스프링부트 session처리 설명(추천)
+https://springboot.tistory.com/17
+
+-RestFul환경에서 세션처리(읽어봐야함)
+https://docs.spring.io/spring-session/docs/1.0.x/reference/html5/guides/rest.html
+
+-스프링부트 설정정도만
+https://jinhokwon.tistory.com/22
+
+-레디스 DB설정까지
+https://heowc.tistory.com/30
+
