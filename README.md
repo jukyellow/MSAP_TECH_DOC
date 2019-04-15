@@ -18,6 +18,7 @@
 ## 개발환경
 
 ### 1. [STS](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/2_%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD1_STS.md "STS")
+### 2. [Gradle](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/2_%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD2_Gradle.md "Gradle")
 
 ## CI/CD
 
