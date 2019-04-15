@@ -56,7 +56,7 @@
  >프로젝트급? 예제(스프링부트 + gradle 프로젝트 예제 / 설명)
   http://gmind.tistory.com/entry/%EC%9E%91%EC%97%85%EC%A4%91-42-Gradle-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0-with-%EC%8A%A4%ED%94%84%EB%A7%81%EB%B6%80%ED%8A%B8-%EB%A9%80%ED%8B%B0%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EA%B5%AC%EC%84%B1?category=655027
 
-적용방법1) root 프로젝트에서 하위 프로젝트 모듈 참조정의하기(단점: 가독성은 좋겠으나 모듈이 증가할때 root를 수정해야함)
+> 적용방법1) root 프로젝트에서 하위 프로젝트 모듈 참조정의하기(단점: 가독성은 좋겠으나 모듈이 증가할때 root를 수정해야함)
 buildscript {}
 subprojects {}
 project(':module-api') {
@@ -64,7 +64,7 @@ project(':module-api') {
         compile project(':module-common')
     }
 }
-적용방법2) root에 정의하지 않고 하위프로젝트에 모듈참조를 정의(가독성은 조금 떨어지나 확장시 root수정없음)
+> 적용방법2) root에 정의하지 않고 하위프로젝트에 모듈참조를 정의(가독성은 조금 떨어지나 확장시 root수정없음)
 apply plugin: 'war'
 dependencies {
 	compile project(':gradle-multi-core')
@@ -154,7 +154,7 @@ dependencies {
 }
 
 
-출처: http://gmind.tistory.com/entry/4-Gradle-프로젝트-만들기-with-스프링부트?category=655027 [GMind]
+> 출처: http://gmind.tistory.com/entry/4-Gradle-프로젝트-만들기-with-스프링부트?category=655027 [GMind]
 --------------------------------------------------------------------------------------------------------------------
 
 (삽질... 설치안해도 되는듯)
