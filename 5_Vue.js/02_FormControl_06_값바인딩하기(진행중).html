@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<script>
+$(document).ready(function(){
+	
+});
+window.onload=function(){
+	new Vue({
+	  el: '#example-5',
+	  data: {
+		selectedModel: ''
+	  }
+	});
+	new Vue({
+	  el: '#example-6',
+	  data: {
+		multiSelectedModel: []
+	  }
+	});
+	new Vue({
+	  el: '#example-7',
+	  data: {
+		selected_vFor: 'A',
+		optionsList: [
+		  { text: 'One', value: 'A' },
+		  { text: 'Two', value: 'B' },
+		  { text: 'Three', value: 'C' }
+		]
+	  }
+	});
+};
+</script>
+</head>
+<body>
+
+<div id="example-5" class="demo">
+  <select v-model="selectedModel">
+    <option disabled value="">Please select one</option>
+    <option>A</option>
+    <option>B</option>
+    <option>C</option>
+  </select>
+  <span>Selected value: {{ selectedModel }}</span>
+</div>
+---------------------------------------------
+<p>
+
+
+다중 셀렉트 (배열을 바인딩 합니다):
+<div id="example-6" class="demo">
+  <select v-model="multiSelectedModel" multiple style="width: 100px;">
+    <option>A</option>
+    <option>B</option>
+    <option>C</option>
+  </select>
+  <br>
+  <span>Selected value: {{ multiSelectedModel }}</span>
+</div>
+---------------------------------------------
+<p>
+
+v-for를 이용한 동적 옵션 렌더링
+<div id="example-7" class="demo">
+	<select v-model="selected_vFor">
+	  <option v-for="optionVal in optionsList" v-bind:value="optionVal.value">
+		{{ optionVal.text }}
+	  </option>
+	</select>
+	<span>Selected val: {{ selected_vFor }}</span>
+</div>
+
+</body>
+</html>

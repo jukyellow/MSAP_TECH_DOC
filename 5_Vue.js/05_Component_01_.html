@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<script>
+$(document).ready(function(){
+	
+});
+window.onload=function(){
+	// 전역 등록
+	Vue.component('my-component', {
+	  template: '<div>사용자 정의 컴포넌트 입니다!</div>'
+	});
+	// 루트 인스턴스 생성
+	new Vue({
+	  el: '#example'
+	});
+	
+	var Child = {
+	  template: '<div>사용자 정의 컴포넌트2 입니다!</div>'
+	};
+	new Vue({
+	  el: '#example2',
+	  //지역 등록
+	  components: {
+		// <my-component> 는 상위 템플릿에서만 사용할 수 있습니다.
+		'my-component2': Child
+	  }
+	});
+	
+	Vue.component('simple-counter', {
+	  template: '<button v-on:click="counter += 1">{{ counter }}</button>',
+	  // 데이터는 기술적으로 함수이므로 Vue는 따지지 않지만
+	  // 각 컴포넌트 인스턴스에 대해 같은 객체 참조를 반환합니다.
+	  data: function () {
+		return {
+			counter: 0
+		  };
+	  }
+	});
+	new Vue({
+	  el: '#example-2'
+	});
+	
+	/*
+		Vue.component('child', {
+		  // props 정의
+		  props: ['message'],
+		  // 데이터와 마찬가지로 prop은 템플릿 내부에서 사용할 수 있으며
+		  // vm의 this.message로 사용할 수 있습니다.
+		  template: '<span>{{ message }}</span>'
+		})d
+	*/
+	new Vue({
+	  el: '#prop-example-1',
+	  components: {
+		child: {
+		  props: ['message'],
+		  template: '<span> 컴포넌트 테스트 : ' +'{{ message }}' + '</span>'
+		}
+	  }
+	});
+	
+	new Vue({
+	  el: '#demo-2',
+	  data: {
+		parentMsg: '부모로부터 전달 받은 메시지'
+	  },
+	  components: {
+		child: {
+		  props: ['myMessage'],
+		  template: '<span>{{myMessage}}</span>'
+		}
+	  }
+	});
+	
+	Vue.component('button-counter', {
+	  template: '<button v-on:click="incrementCounter">{{ counter }}</button>',
+	  data: function () {
+		return {
+		  counter: 0
+		}
+	  },
+	  methods: {
+		incrementCounter: function () {
+		  this.counter += 1
+		  this.$emit('increment')
+		}
+	  },
+	})
+
+	new Vue({
+	  el: '#counter-event-example',
+	  data: {
+		total: 0
+	  },
+	  methods: {
+		incrementTotal: function () {
+		  this.total += 1
+		}
+	  }
+	});
+	
+	Vue.component('currency-input', {
+	  template: '\
+		<span>\
+		  $\
+		  <input\
+			ref="input"\
+			v-bind:value="value"\
+			v-on:input="updateValue($event.target.value)">\
+		</span>\
+	  ',
+	  props: ['value'],
+	  methods: {
+		// 값을 직접 업데이트하는 대신 이 메소드를 사용하여
+		// 입력 값에 대한 서식을 지정하고 배치 할 수 있습니다
+		updateValue: function (value) {
+		  var formattedValue = value
+			// 공백을 제거합니다.
+			.trim()
+			// 소수 자릿수 2자리로 줄입니다
+			.slice(
+			  0,
+			  value.indexOf('.') === -1
+				? value.length
+				: value.indexOf('.') + 3
+			)
+		  // 값이 아직 정규화 되지 않은 경우
+		  // 이를 수동으로 재정의하여 조건을 충족시킵니다.
+		  if (formattedValue !== value) {
+			this.$refs.input.value = formattedValue
+		  }
+		  // 입력 이벤트를 통해 숫자 값을 내보냅니다.
+		  this.$emit('input', Number(formattedValue)) //?
+		}
+	  }
+	})
+	new Vue({
+	  el: '#app',
+	  data: {
+		price: 0,
+	  },
+	  computed: {
+		total: function () {
+		  return ((
+			this.price * 100
+		  ) / 100).toFixed(2)
+		}
+	  }
+	})
+};
+</script>
+</head>
+<body>
+
+컴포넌트는 Vue의 가장 강력한 기능 중 하나입니다. <br>
+기본 HTML 엘리먼트를 확장하여 재사용 가능한 코드를 캡슐화하는 데 도움이 됩니다.<br> 
+상위 수준에서 컴포넌트는 Vue의 컴파일러에 의해 동작이 추가된 사용자 지정 엘리먼트입니다.<br> 
+경우에 따라 특별한 is 속성으로 확장 된 원시 HTML 엘리먼트로 나타날 수도 있습니다.<br>
+------------------------------------------------------------<br>
+<p>
+<div id="example">
+  <my-component></my-component>
+</div>
+
+<div id="example2">
+  <my-component2></my-component2>
+</div>
+
+------------------------------------------------------------<br>
+<p>
+Vue 생성자에 사용할 수 있는 대부분의 옵션은 컴포넌트에서 사용할 수 있습니다.<br> 
+한가지 특별한 경우가 있습니다. data 는 함수여야 합니다<br> 
+
+<div id="example-2">
+  <simple-counter></simple-counter>
+  <simple-counter></simple-counter>
+  <simple-counter></simple-counter>
+</div>
+
+------------------------------------------------------------<br>
+<p>
+prop는 상위 컴포넌트의 정보를 전달하기위한 사용자 지정 특성입니다. <br>
+하위 컴포넌트는props 옵션을 사용하여 수신 할 것으로 기대되는 props를 명시적으로 선언해야합니다.<br>
+<div id="prop-example-1" class="demo">
+  <child message="안녕하세요!"></child>
+</div>
+
+------------------------------------------------------------<br>
+<p>정규 속성을 표현식에 바인딩하는 것과 비슷하게, v-bind를 사용하여 부모의 데이터에 props를 동적으로 바인딩 할 수 있습니다. <br>
+데이터가 상위에서 업데이트 될 때마다 하위 데이터로도 전달됩니다.
+<div id="demo-2" class="demo">
+  <input v-model="parentMsg">
+  <br>
+  <child v-bind:my-message="parentMsg"></child>
+</div>
+
+------------------------------------------------------------<br>
+<p>v-on을 이용한 사용자 지정 이벤트
+<div id="counter-event-example">
+  <p>{{ total }}</p>
+  <button-counter v-on:increment="incrementTotal"></button-counter>
+  <button-counter v-on:increment="incrementTotal"></button-counter>
+</div>
+
+------------------------------------------------------------<br>
+<p>사용자 정의 이벤트를 사용하여 폼 입력 컴포넌트 만들기
+<div id="app">
+	<currency-input v-model="price"></currency-input>
+</div>
+
+
+------------------------------------------------------------<br>
+<p>
+
+
+<table>
+  <my-row>...</my-row>
+</table>
+사용자 지정 컴포넌트 <my-row> 는 잘못 된 컨텐츠가 되어, 결과적으로 렌더링시 에러를 발생시킵니다. 해결 방법은 is 특수 속성을 사용하는 것입니다 :<br>
+
+<table>
+  <tr is="my-row"></tr>
+</table> 
+다음 소스 중 하나에 포함되면 문자열 템플릿을 사용하는 경우에는 이러한 제한 사항이 적용되지 않습니다.<br>
+
+1)script type="text/x-template"> <br>
+2)JavaScript 인라인 템플릿 문자열 <br>
+3).vue 컴포넌트 <br>
+따라서 가능한 경우 항상 문자열 템플릿을 사용하는 것이 좋습니다.<br>
+
+------------------------------------------------------------<br>
+<p>
+#컴포넌트간 통신 <br>
+1)부모->자식: props <br>
+2)자식->부모: this.$emit() <br>
+3)형제간,관계없는 컴포넌트간: EventBus <br>
+
+</body>
+</html>
+

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<script>
+//dom tree 화면로딩->이후 호출
+//$(document).ready(function(){
+//});
+//dom tree로딩->모든요소(css,js,image등)메모리로딩->onload이후 화면에 표시?
+window.onload=function(){
+	//alert(">>");
+	new Vue({
+		el: '#example',
+		data: {
+		  message: ''
+		}
+	});
+};
+</script>
+</head>
+<body>
+
+<div id="example" class="demo">
+<!--
+v-model 디렉티브를 사용하여 폼 input과 textarea 엘리먼트에 양방향 데이터 바인딩을 생성할 수 있습니다. 
+입력 유형에 따라 엘리먼트를 업데이트 하는 올바른 방법을 자동으로 선택합니다. 
+약간 이상하지만 v-model은 기본적으로 사용자 입력 이벤트에 대한 데이터를 업데이트하는
+ “syntax sugar”이며 일부 경우에 특별한 주의를 해야합니다.
+-->
+  <input v-model="message" placeholder="여기를 수정해보세요">
+  <p>메시지: {{ message }}</p>
+</div>
+
+</body>
+</html>

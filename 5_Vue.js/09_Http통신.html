@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!-- axios가 IE를 지원하지 않기 때문->Promise’이(가) 정의되지 않았습니다.오류시 추가 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+
+
+<style>
+</style>
+
+<script>
+$(document).ready(function(){
+	
+});
+window.onload=function(){
+	new Vue({
+		el: '#form',
+		data:{	
+			message: 'john'	
+		},
+		methods: {
+			name_by_ajax: function(sType){
+				// AJAX시 크로스도메인인 경우 JSONP, JSONP를 이용하기
+				//(No 'Access-Control-Allow-Origin' header is present on the requested resource.)
+				 $.ajax({
+                   type: 'POST',
+                   dataType: 'json',
+                   data: {'name': 'AAA'},
+                   url: "http://192.168.0.16:8081/msap/acps/v1/user/" + sType,
+                   // jsonp 값을 전달할 때 사용되는 파라미터 변수명
+                   // 이 속성을 생략하면 callback 파라미터 변수명으로 전달된다.
+                   //jsonp: 'name',                   
+				   success:function(json) {
+						console.log(json);
+						var myJSON = JSON.stringify(json); //화면에 전체를 찍을때 직렬화 필요.
+                        $("#result").text(myJSON);
+                   }
+              });
+			},
+			name_by_get : function(sType){
+				 $.get("http://192.168.0.16:8081/msap/acps/v1/user/" + sType,function(data, status) {
+						console.log(data);
+						var myJSON = JSON.stringify(data); //화면에 전체를 찍을때 직렬화 필요.
+                        $("#result").text(myJSON);
+                   }
+				);
+			},
+			//axios는 응답객체(data, hearder, request, status등)를 받아와서 활용용도가 ajax보다 높다.
+			//GITHUB:	https://github.com/axios/axios
+			indate_by_axios: function(sType){
+				axios.post("http://192.168.0.16:8081/msap/acps/v1/user/" + sType)
+				  .then(function (response) {
+					// handle success
+					console.log(response);
+					var myJSON = JSON.stringify(response.data);
+                    $("#result").text(myJSON);
+				  })
+				  .catch(function (error) {
+					// handle error
+					console.log(error);
+				  })
+				  .then(function () {
+					// always executed
+				  })
+			  }
+				/*axios({
+					 method: 'post',
+					  url: '/user/12345',
+					  data: {
+						firstName: 'Fred',
+						lastName: 'Flintstone'
+					  }
+					
+				)*/
+		}
+	});
+	  
+	  new Vue({
+		el: '#app',
+		 data: function () {
+			return {
+			  posts: []
+			}
+		  },
+		  computed: {
+			hasResult: function () {
+			  return this.posts.length > 0
+			}
+		  },
+		  methods: {
+			searchTerm: function () {
+			  // using JSONPlaceholder
+			  const baseURI = 'https://jsonplaceholder.typicode.com';
+			  axios.get('${baseURI}/posts')
+				  //.then((result) => {
+				  .then(function (result) {
+						console.log(result)
+						this.posts = result.data
+				  }).catch(function (error) {
+					// handle error
+					console.log(error);
+				  })
+			}
+		  }
+	  })
+};
+</script>
+</head>
+<body>
+
+<form id = "form" method="POST">
+	<div>
+		host: <input type="input" name="MS_CON_HOST" size="30" value="http://192.168.0.16"/>
+		port: <input type="input" name="MS_CON_PORT" size="5" value="9001"/>
+	</div>
+	<br>
+	<div>
+		request id: <input type="input" name="USER_ID" size="20" value="JUK"/>
+		<input type="button" value="name_by_ajax" v-on:click="name_by_ajax('name');">
+		<input type="button" value="name_by_get" v-on:click="name_by_get('name');">
+		<input type="button" value="indate_by_axios" v-on:click="indate_by_axios('indate');">
+	</div>
+	<p id="result">response data:</p>
+</form>
+
+----------------------------------------------------------------------<br>
+<p>
+
+<div id="app">
+	<div v-if="hasResult">
+	  <div v-for="post in posts" v-bind:key="post.id">
+		<h1></h1>
+		<p></p>
+	  </div>
+	</div>
+	<button v-else v-on:click="searchTerm">글 불러오기</button>
+</div>
+
+</body>
+</html>
+

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<script>
+$(document).ready(function(){
+	
+});
+window.onload=function(){
+	new Vue({
+	  el: '#example',
+	  data: {
+		checkModel: false
+	  }
+	});
+	
+	new Vue({
+	  el: '#example2',
+	  data: {
+		multiCheckModel: []
+	  }
+	});
+	
+	new Vue({
+	  el: '#example3',
+	  data: {
+		toggle: 'no'
+	  }
+	});
+};
+</script>
+</head>
+<body>
+
+<div id="example" class="demo">
+	하나의 체크박스는 단일 boolean 값을 가집니다.<br>
+  <input type="checkbox" id="checkbox" v-model="checkModel">
+  <label for="checkbox">{{ checkModel }}</label>
+</div>
+
+<p>
+
+<div id='example2'>
+  여러개의 체크박스는 같은 배열을 바인딩 할 수 있습니다<br>
+  <input type="checkbox" id="jack" value="Jack" v-model="multiCheckModel">
+  <label for="jack">Jack</label>
+  <input type="checkbox" id="john" value="John" v-model="multiCheckModel">
+  <label for="john">John</label>
+  <input type="checkbox" id="mike" value="Mike" v-model="multiCheckModel">
+  <label for="mike">Mike</label>
+  <br>
+  <span>체크한 이름: {{ multiCheckModel }}</span>
+</div>
+<p>
+
+ture-value, false-value
+<div id="example3">
+<input
+  type="checkbox"
+  v-model="toggle"
+  true-value="yes"
+  false-value="no"
+>
+<label for="checkbox">{{ toggle }}</label>
+</div>
+
+</body>
+</html>

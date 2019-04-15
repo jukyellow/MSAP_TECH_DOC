@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<script>
+$(document).ready(function(){
+    // 앞서 HTML에서 선언한 View의 id를 명시한다.
+	var eleId = '#helloView';
+
+	// View에 출력될 Model을 명시한다.
+	var eleModel = {
+		message: 'Hello, Vue.js!'
+	};
+
+	// 앞서 작성한 View, Model를 사용하여 ViewModel 오브젝트를 생성한다. 이 시점에 해당 View에 ViewModel이 적용되어 브라우저에 렌더링된다.
+	var eleController = new Vue({
+		el: eleId,
+		data: eleModel
+	});
+	
+	$("#btn").on("click", function(){
+		// ViewModel 오브젝트의 Model로 참조된 오브젝트의 값을 변경하면 실시간으로 브라우저에 새로운 값이 렌더링된다.
+		eleController.message = 'Good-bye, Vue.js!';
+	});
+});
+</script>
+</head>
+<body>
+
+<!-- Vue.js의 핵심은 간단한 템플릿 구문을 사용해 선언적으로 DOM에 데이터를 렌더링하는 것입니다. 
+	Mustache(콧수염): 이중괄호문
+	객체의 message 속성이 변경될 때 마다 갱신됩니다.
+-->
+<div id="helloView">  {{ message }} 
+<input type="button" id="btn" value="click">
+
+<p>
+<!--
+Vue.js는 렌더링 된 DOM을 기본 Vue 인스턴스의 데이터에 선언적으로 바인딩 할 수있는 HTML 기반 템플릿 구문을 사용합니다. 
+모든 Vue.js 템플릿은 스펙을 호환하는 브라우저 및 HTML 파서로 구문 분석 할 수있는 유효한 HTML입니다.
+-->
+
+<!--
+	디렉티브는 v- 접두사가 있는 특수 속성입니다. 디렉티브 속성 값은 단일 JavaScript 표현식 이 됩니다. 
+	디렉티브의 역할은 표현식의 값이 변경될 때 사이드이펙트를 반응적으로 DOM에 적용하는 것 입니다. 
+	(나중에 설명할 v-for는 예외입니다.) 
+-->
+<span v-once>다시는 변경하지 않습니다: {{ message }}</span>
+</div>
+
+
+
+</body>
+</html>

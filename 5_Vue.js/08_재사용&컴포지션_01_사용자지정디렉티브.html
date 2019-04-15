@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<style>
+</style>
+
+<script>
+$(document).ready(function(){
+	
+});
+window.onload=function(){
+	Vue.directive('demo', {
+	  bind: function (el, binding, vnode) {
+		var s = JSON.stringify
+		el.innerHTML =
+		  'name: '       + s(binding.name) + '<br>' +
+		  'value: '      + s(binding.value) + '<br>' +
+		  'expression: ' + s(binding.expression) + '<br>' +
+		  'argument: '   + s(binding.arg) + '<br>' +
+		  'modifiers: '  + s(binding.modifiers) + '<br>' +
+		  'vnode keys: ' + Object.keys(vnode).join(', ')
+	  }
+	})
+	new Vue({
+	  el: '#hook-arguments-example',
+	  data: {
+		message: 'hello!'
+	  }
+	})
+};
+</script>
+</head>
+<body>
+
+<script type="text/x-template" id="modal-template">
+  
+</script>
+
+<div id="hook-arguments-example" v-demo:foo.a.b="message"></div>
+
+</body>
+</html>
+

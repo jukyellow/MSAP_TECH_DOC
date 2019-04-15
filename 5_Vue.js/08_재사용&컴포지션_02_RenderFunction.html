@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<style>
+</style>
+
+<script>
+$(document).ready(function(){
+	
+});
+window.onload=function(){
+	Vue.component('anchored-heading', {
+	  template: '#anchored-heading-template',
+	  props: {
+		level: {
+		  type: Number,
+		  required: true
+		}
+	  }
+	})
+	new Vue({
+	  el: '#app',
+	  data: {
+		message: 'Hello world!'
+	  }
+	})
+	
+	//템플릿대신 Render함수(자바스크립트소스)로 구현한 예제
+	Vue.component('anchored-heading-2', {
+	  render: function (createElement) {
+		return createElement(
+		  'h' + this.level,   // 태그 이름
+		  this.$slots.default // 자식의 배열
+		)
+	  },
+	  props: {
+		level: {
+		  type: Number,
+		  required: true
+		}
+	  }
+	})
+	new Vue({
+	  el: '#app2',
+	  data: {
+		message2: 'Hello world!'
+	  }
+	})
+	
+	//전체예제 (링크추가)
+	var getChildrenTextContent = function (children) {
+	  return children.map(function (node) {
+		return node.children
+		  ? getChildrenTextContent(node.children)
+		  : node.text
+	  }).join('')
+	}
+
+	Vue.component('anchored-heading-3', {
+	  render: function (createElement) {
+		// kebabCase id를 만듭니다.
+		var headingId = getChildrenTextContent(this.$slots.default)
+		  .toLowerCase()
+		  .replace(/\W+/g, '-')
+		  .replace(/(^\-|\-$)/g, '')
+
+		return createElement(
+		  'h' + this.level,
+		  [
+			createElement('a', {
+			  attrs: {
+				name: headingId,
+				href: '#' + headingId
+			  }
+			}, this.$slots.default)
+		  ]
+		)
+	  },
+	  props: {
+		level: {
+		  type: Number,
+		  required: true
+		}
+	  }
+	})
+	
+	new Vue({
+	  el: '#app3',
+	  data: {
+		message3: 'Hello world!'
+	  }
+	})
+	
+};
+</script>
+
+</head>
+<body>
+
+html 태그를 이용한 화면 출력(h1~h3)<br>
+
+<h1>Hello world!</h1><br>
+<h2>Hello world!</h2><br>
+<h3>Hello world!</h3><br>
+--------------------------------------------------------------------------------<br>
+
+
+Vue는 템플릿을 사용하여 대다수의 경우 HTML을 작성할 것을 권장합니다. <br>
+그러나 JavaScript가 완전히 필요한 상황이 있습니다. <br>
+바로 여기에서 템플릿에 더 가까운 컴파일러인 render 함수를 사용할 수 있습니다.<br>
+<p>version:1 템플릿 예제 <br>
+
+<script type="text/x-template" id="anchored-heading-template">
+  <h1 v-if="level === 1">
+    <slot></slot>
+  </h1>
+  <h2 v-else-if="level === 2">
+    <slot></slot>
+  </h2>
+  <h3 v-else-if="level === 3">
+    <slot></slot>
+  </h3>
+  <h4 v-else-if="level === 4">
+    <slot></slot>
+  </h4>
+  <h5 v-else-if="level === 5">
+    <slot></slot>
+  </h5>
+  <h6 v-else-if="level === 6">
+    <slot></slot>
+  </h6>
+</script>
+
+<div id="app">
+	<anchored-heading :level="1">{{message}}</anchored-heading><br>
+	<anchored-heading :level="2">{{message}}</anchored-heading><br>
+	<anchored-heading :level="3">{{message}}</anchored-heading><br>
+</div>
+
+--------------------------------------------------------------------------------<br>
+<p>version:2 Render함수 예제 <br>
+
+<div id="app2">
+	<slot><anchored-heading-2 :level="1">{{message2}}</anchored-heading></slot><br>
+	<slot><anchored-heading-2 :level="2">{{message2}}</anchored-heading></slot><br>
+	<slot><anchored-heading-2 :level="3">{{message2}}</anchored-heading></slot><br>
+	
+	<anchored-heading-2 :level="1">{{message2}}</anchored-heading><br>
+	<anchored-heading-2 :level="2">{{message2}}</anchored-heading><br>
+	<anchored-heading-2 :level="3">{{message2}}</anchored-heading><br>
+</div>
+
+#Slots <br>
+this.$slots에서 정적 슬롯 내용을 VNodes의 배열로 접근할 수 있습니다. <br>
+<textarea style="width:400px; height:100px;">
+render: function (createElement) {
+  // `<div><slot></slot></div>`
+  return createElement('div', this.$slots.default)
+}
+</textarea>
+<p>
+
+#createElement 전달인자 <br>
+<textarea style="width:500px; height:500px;">
+// @returns {VNode}
+createElement(
+  // {String | Object | Function}
+  // HTML 태그 이름, 컴포넌트 옵션 또는 함수 중
+  // 하나를 반환하는 함수입니다. 필수 사항.
+  'div',
+
+  // {Object}
+  // 템플릿에서 사용할 속성에 해당하는 데이터 객체입니다
+  // 데이터 객체입니다. 선택 사항.
+  {
+    // (아래 다음 섹션에 자세히 설명되어 있습니다.)
+  },
+
+  // {String | Array}
+  // VNode 자식들. `createElement()`를 사용해 만들거나,
+  // 간단히 문자열을 사용해 'text VNodes'를 얻을 수 있습니다. 선택사항
+  [
+    'Some text comes first.',
+    createElement('h1', 'A headline'),
+    createElement(MyComponent, {
+      props: {
+        someProp: 'foobar'
+      }
+    })
+  ]
+)
+</textarea>
+<p>
+--------------------------------------------------------------------------------<br>
+<p>
+render 함수가 실용적 일 수있는 간단한 예제를 살펴 보겠습니다. 링크를 포함한 헤더를 생성한다고 가정한 예제 입니다.<br>
+version:1, html <br>
+<h1>
+  <a name="hello-world" href="#hello-world">
+    Hello world!
+  </a>
+</h1>
+--------------------------------------------------------------------------------<br>
+<p>
+version:2, Render함수 예제 <br>
+
+<div id="app3">
+	<slot><anchored-heading-3 :level="1">{{message3}}</anchored-heading></slot><br>
+	<slot><anchored-heading-3 :level="2">{{message3}}</anchored-heading></slot><br>
+	<slot><anchored-heading-3 :level="3">{{message3}}</anchored-heading></slot><br>
+	<slot><anchored-heading-3 :level="4">{{message3}}</anchored-heading></slot><br>
+</div>
+
+</body>
+</html>
+
