@@ -18,40 +18,40 @@
 ![image](https://user-images.githubusercontent.com/45334819/56145667-add0d180-5fdf-11e9-9bde-02316c7ca5ef.png)
 
 <hr>
-
+  
 ### 2. 2차 Proj 고도화  
  * 작업기간(계획): 2019년 5월~ 2019년 6월(2개월)  
  * 작업범위 : 쿠버네티스/Knative 연동추가, Vue grid/DB연동/이벤트처리 추가  
+  
+<hr />
+
+### Documentation
+
+#### 1. [MSA](https://github.com/jukyellow/msapdoc/blob/master/1_%EA%B0%9C%EC%9A%941_MSA.md "MSA")
+#### 2. [Spring Cloud](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/1_%EA%B0%9C%EC%9A%942_%EC%8A%A4%ED%94%84%EB%A7%81%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C.md "Spring Cloud")
+
+### 개발환경
+
+#### 1. [STS](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/2_%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD1_STS.md "STS")
+#### 2. [Gradle](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/2_%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD2_Gradle.md "Gradle")
+
+### CI/CD
+
+#### 1. [Docker](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/3_CICD1_%EB%8F%84%EC%BB%A4.md "Docker")
+
+### 설계
+
+#### 1. [REST](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/4_%EC%84%A4%EA%B3%84_REST.md "REST")
+
+### 구현기술
+
+#### 1. [Vue.js](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/5_%EA%B5%AC%ED%98%842_UI1_Vue.js.md "Vue.js")
+#### 2. [BootStrap](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/5_%EA%B5%AC%ED%98%842_UI2_%EB%B6%80%ED%8A%B8%EC%8A%A4%ED%8A%B8%EB%9E%A9.md "BootStrap")
+
 
 <hr />
 
-## 개요
-
-### 1. [MSA](https://github.com/jukyellow/msapdoc/blob/master/1_%EA%B0%9C%EC%9A%941_MSA.md "MSA")
-### 2. [Spring Cloud](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/1_%EA%B0%9C%EC%9A%942_%EC%8A%A4%ED%94%84%EB%A7%81%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C.md "Spring Cloud")
-
-## 개발환경
-
-### 1. [STS](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/2_%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD1_STS.md "STS")
-### 2. [Gradle](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/2_%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD2_Gradle.md "Gradle")
-
-## CI/CD
-
-### 1. [Docker](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/3_CICD1_%EB%8F%84%EC%BB%A4.md "Docker")
-
-## 설계
-
-### 1. [REST](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/4_%EC%84%A4%EA%B3%84_REST.md "REST")
-
-## 구현기술
-
-### 1. [Vue.js](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/5_%EA%B5%AC%ED%98%842_UI1_Vue.js.md "Vue.js")
-### 2. [BootStrap](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/5_%EA%B5%AC%ED%98%842_UI2_%EB%B6%80%ED%8A%B8%EC%8A%A4%ED%8A%B8%EB%9E%A9.md "BootStrap")
-
-
-<hr />
-
-## 참고 사이트
+### 참고 사이트
 
 https://spring.io/projects/spring-boot  
 https://kr.vuejs.org/  
