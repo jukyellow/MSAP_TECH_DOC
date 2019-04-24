@@ -1,0 +1,17 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: eureka
+  profiles:
+    active: local
+#auto reload(hot deploy)
+  devtools:
+    livereload:
+      enabled: true
+#Config Server      
+  cloud:
+    config:
+      uri: http://192.168.99.100:9000
+#      uri: http://localhost:9000
+      name: msap-config-server

@@ -1,0 +1,25 @@
+server:
+  port: 9003
+
+spring:
+  application:
+    name: msap-turbine-server
+      
+#Config Server      
+  cloud:
+    config:
+      uri: http://192.168.99.100:9000
+#      uri: http://localhost:9000
+      name: msa-architecture-config-server
+
+#Eureka Client   
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.99.100:9001/eureka/
+#      defaultZone: http://localhost:9001/eureka/
+      
+#Turbine Server 
+turbine:     
+  appConfig: msap-user-service
+  clusterNameExpression: new String("default")

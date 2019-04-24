@@ -1,0 +1,64 @@
+plugins {
+	id 'org.springframework.boot' version '1.5.10.RELEASE'
+	id 'java'
+	id 'war'
+}
+
+apply plugin: 'io.spring.dependency-management'
+//apply plugin: 'docker'
+
+group = 'msap.config'
+version = '0.1.0'
+//group = 'springio'
+//mainClassName = 'com.msap.config.MsapConfigServerApplication'
+//bootJar.enabled=false
+jar.enabled=true
+
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('springCloudVersion', 'Edgware.SR3')
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.cloud:spring-cloud-config-server'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	
+	//classpath('gradle.plugin.com.palantir.gradle.docker:gradle-docker:1.2') //:0.13.0
+}
+
+
+//jar {
+    //manifest {
+    //    attributes 'Main-Class': 'com.company.project.MainClass'
+    //}
+   // manifest {
+   //     attributes  'Title': 'MSAP-CONFIG-SERVER', 'Version': version, 'Main-Class': 'MsapConfigServerApplication'
+   // }
+//}
+
+//apply plugin: 'com.palantir.docker'
+
+//task unpack(type: Copy) {
+//    dependsOn bootJar
+//    from(zipTree(tasks.bootJar.outputs.files.singleFile))
+//    into("build/dependency")
+//}
+//docker {
+//    name "${project.group}/${bootJar.baseName}"
+//    copySpec.from(tasks.unpack.outputs).into("dependency")
+//    buildArgs(['DEPENDENCY': "dependency"])
+//}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}

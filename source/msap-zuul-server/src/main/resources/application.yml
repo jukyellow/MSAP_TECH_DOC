@@ -1,0 +1,36 @@
+server:
+  port: 9004
+    
+spring:
+  application:
+    name: msap-zuul-server
+
+#Config Server      
+  cloud:
+    config:
+      uri: http://192.168.99.100:9000
+#      uri: http://localhost:9000
+      name: msap-config-server
+
+#Eureka Client   
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.99.100:9001/eureka/
+#      defaultZone: http://localhost:9001/eureka/
+      
+#Zuul Routing    
+zuul:
+  routes:
+    msapuser: #routing id
+      path: /msapuser/** #zuul context root
+      serviceId: msap-user-service #spring application name      
+    msapbill:
+      path: /msapbill/** 
+      serviceId: msap-bill-service      
+    msapstatus: 
+      path: /msapstatus/**
+      serviceId: msap-status-service
+    other:
+      path: /other/**
+      serviceId: msap-other-service

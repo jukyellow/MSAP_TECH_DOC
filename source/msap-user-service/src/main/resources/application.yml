@@ -1,0 +1,30 @@
+server:
+  port: 9101
+
+#mybatis:
+#  config-location: classpath:mybatis/mybatis-config.xml 
+  
+spring:
+  application:
+    name: msap-user-service
+
+#Config Server      
+  cloud:
+    config:
+      uri: http://192.168.99.100:9000
+#      uri: http://localohost:9000
+      name: msap-config-server
+
+#Eureka Client   
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.99.100:9001/eureka/
+#      defaultZone: http://localohost:9001/eureka/
+      
+management:
+  endpoints:
+    web:
+      exposure:
+#        include:*
+        include: .stream

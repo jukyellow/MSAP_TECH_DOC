@@ -1,0 +1,31 @@
+>도커빌드(in docker)
+docker build -t msap-config-server .
+docker build -t msap-eureka-server .
+docker build -t msap-hystrix-server .
+docker build -t msap-turbine-server .
+docker build -t msap-zull-server .
+docker build -t msap-user-service .
+
+docker build -t msap-bill-service .
+
+
+>도커 컨테이너 실행
+docker run --publish 9000:9000 -it msap-config-server
+docker run --publish 9001:9001 -it msap-eureka-server
+docker run --publish 9002:9002 -it msap-hystrix-server
+docker run --publish 9003:9003 -it msap-turbine-server
+docker run --publish 9004:9004 -it msap-zull-server
+docker run --publish 9101:9101 -it msap-user-service
+
+docker run --publish 9102:9102 -it msap-bill-service
+
+--------------------------------------------------------------------------------------------------------------
+
+>실행 페라미터 전달
+docker run -e "SPRING_PROFILES_ACTIVE=dev" -p 8080:8080 -t springio/gs-spring-boot-docker
+
+>도커 컨테이너 내부(shell) 접속하기 (디렉토리를 확인하고, 특정경로에 소스를 배포하기 위해)
+docker exec -it  edb5ee761620 /bin/bash
+
+>도커 컨네이너 접속
+docker attach 도커ID

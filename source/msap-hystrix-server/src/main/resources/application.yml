@@ -1,0 +1,30 @@
+server:
+  port: 9002
+
+spring:
+  application:
+    name: msap-hystrix-dashboard
+    
+#Config Server      
+  cloud:
+    config:
+      uri: http://192.168.99.100:9000
+#      uri: http://localhost:9000
+      name: msap-config-server
+
+#Eureka Client   
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.99.100:9001/eureka/
+#      defaultZone: http://localhost:9001/eureka/
+
+#Actuator, endpoints enable!
+#management.endpoints.web.exposure.include=hystrix.stream
+management:
+  endpoints:
+    env:
+      enabled: true
+    web:
+      exposure:
+        include:*
