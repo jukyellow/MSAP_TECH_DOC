@@ -1,12 +1,27 @@
-# MSAP 기술문서 목차
+# MSAP (Micro Serice API Platform) 개인 Project
 
-#### MSAP(Micro Serice API Platform) 프로젝트 개발에 사용된 주요기술요소 설명을 위한 레파지토리 입니다.
-##### 요소기술에 대한 전반적인 이해보다, MSAP 개발에 사용된 기능위주의 설명으로 채워질 예정입니다.
+> MSAP(Micro Serice API Platform) 프로젝트 개발에 사용된 주요기술요소 설명을 위한 레파지토리 입니다.  
+> 요소기술에 대한 전반적인 이해보다, MSAP 개발에 사용된 기능위주의 설명으로 채워질 예정입니다.  
+  
+### 1. 1차 Proj  
+ * 작업기간: 2018년 11월말 ~ 2019년 3월말 (4개월)  
+ * 개발범위:   
+   -백앤드(Spring Cloud): Eureka, Zuul, Config, Hystrix, Turbine등 간단하게 백앤드 구성  
+   -사용자/어드민(부트스트랩, Vue): 사용자(Rest API 조회), 어드민(Spring Cloud Dashboar로 구성)   
+   -배포환경: Docker(로컬 windows)  
+ * 개발환경/개발언어: 아래 기술스택 참고  
 
+(MSAP 구성도)  
 ![image](https://user-images.githubusercontent.com/45334819/54955639-33d59b80-4f91-11e9-9d63-db9609926fac.png)
 
+(MSAP 기술스택)  
 ![image](https://user-images.githubusercontent.com/45334819/56145667-add0d180-5fdf-11e9-9bde-02316c7ca5ef.png)
 
+<hr>
+
+### 2. 2차 Proj 고도화  
+ * 작업기간(계획): 2019년 5월~ 2019년 6월(2개월)  
+ * 작업범위 : 쿠버네티스/Knative 연동추가, Vue grid/DB연동/이벤트처리 추가  
 
 <hr />
 
