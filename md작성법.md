@@ -50,4 +50,4 @@ test..2
 
  ![image](url...)  
  
- <span style="color:red"> 색상은 HTML로...가 막혔다고 </span>  
+
