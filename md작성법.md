@@ -50,7 +50,8 @@ test..2
 
  ![image](url...)  
  
- ``` c
+ - 특정언어를 지정해주면 pre에서 색상표시됨  
+ ``` c  
  <pre>
   int a;
  </pre>
