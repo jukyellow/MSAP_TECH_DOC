@@ -50,4 +50,8 @@ test..2
 
  ![image](url...)  
  
+ ``` c
+ <pre>
+  int a;
+ </pre>
 
