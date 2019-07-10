@@ -24,12 +24,12 @@ public class ConfigClientController {
 ```yml
 <pre>
 management:
-	security:
-		enabled: true
-	endpoints:
-	web:
-		exposure:
-			include: refresh # or '*'
+  security:
+    enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: refresh # or '*'
 </pre>
 ```
 - 개별서비스 port의 (actuator)refresh를 날려줌
@@ -41,14 +41,14 @@ management:
 ```yml
 <pre>
 server:
-	port: 8081
+  port: 8081
 
 spring:
-	application:
-		name: yaboong
-	cloud:
-		config:
-			uri: http://localhost:8080
+  application:
+    name: yaboong
+  cloud:
+    config:
+      uri: http://localhost:8080
 </pre>
 ```
 #### 4)개별서비스의 dependency
@@ -122,8 +122,8 @@ test:
 ``` yml
 <pre>
 who:
-	am:
-		i: live-yaboong
+  am:
+    i: live-yaboong
 </pre>
 ```
 #### 3)Java Annotation 추가
@@ -143,11 +143,11 @@ public class ConfigServerApplication {
 ``` yml
 <pre>
 spring:
-	cloud:
-		config:
-			server:
-				git:
-					uri: https://github.com/yaboong/spring-cloud-config-repository
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/yaboong/spring-cloud-config-repository
 </pre>
 ```
 #### 5)dependency 추가
