@@ -5,7 +5,8 @@
 
 
 #### 1)conifg 서버의 properties 속성을 가져다 쓸때
-<code> `java
+``` java
+<pre>
 @RestController
 @RefreshScope
 public class ConfigClientController {
@@ -16,10 +17,12 @@ public class ConfigClientController {
 		return identity;
 	}
 }
-</code>
+</pre>
 
 
 #### 2)개별 서비스에서 refresh로 다시 읽어올때
+```yml
+<pre>
 management:
 	security:
 		enabled: true
@@ -27,12 +30,15 @@ management:
 	web:
 		exposure:
 			include: refresh # or '*'
+</pre>
 - 개별서비스 port의 (actuator)refresh를 날려줌
 - (POST) http://localhost:8081/refresh
 - Refresh 정상동작여부 확인법 : 하단 3번 참고
 
 
 #### 3)개별서비스에서 config 서버 설정
+```yml
+<pre>
 server:
 	port: 8081
 
@@ -42,23 +48,26 @@ spring:
 	cloud:
 		config:
 			uri: http://localhost:8080
-
+</pre>
 
 #### 4)개별서비스의 dependency
+```groovy
+<pre>
 dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-web')
 	implementation('org.springframework.cloud:spring-cloud-starter-config')
 	implementation('org.springframework.boot:spring-boot-starter-actuator')
 }
+</pre>
 
 
-#### 5)micro-service 실행시, 페라미터 전달( 환경변수로 spring.profiles.active 정보를 설정함)
->JVM옵션설정으로  Spring Profile 기능은 3.1 버전 이상부터 지원합니다.
--Dspring.profiles.active=live
--Dspring.profiles.active=dev
--Dspring.profiles.active=local
->local 스프링부트 실행시, bootstrap.xml에 spring.profiles.active={환경} 정보를 미리 세팅
->도커 실행시 Dockerfile ENDPOINT 부분에 설정(-Dspring.profiles.active=live)하고 시작?
+#### 5)micro-service 실행시, 페라미터 전달( 환경변수로 spring.profiles.active 정보를 설정함)  
+- JVM옵션설정으로  Spring Profile 기능은 3.1 버전 이상부터 지원합니다.  
+  -Dspring.profiles.active=live  
+  -Dspring.profiles.active=dev  
+  -Dspring.profiles.active=local  
+- local 스프링부트 실행시, bootstrap.xml에 spring.profiles.active={환경} 정보를 미리 세팅  
+- 도커 실행시 Dockerfile ENDPOINT 부분에 설정(-Dspring.profiles.active=live)하고 시작?  
 
 
 
@@ -73,7 +82,8 @@ dependencies {
 
 #### 2)config 파일의 예
 - msap-zuul-server-local.yml
-<pre> `yml
+``` yml
+<pre> 
 #local enviroment
 eureka:
   server:
@@ -108,12 +118,16 @@ test:
 </pre>
 
 -yaboong-live.yml
+``` yml
+<pre>
 who:
 	am:
-	i: live-yaboong
+		i: live-yaboong
+</pre
 
 #### 3)Java Annotation 추가
-<pre> `java
+``` java
+<pre>
 @SpringBootApplication
 @EnableConfigServer
 public class ConfigServerApplication {
@@ -125,13 +139,15 @@ public class ConfigServerApplication {
 
 
 #### 4) src/main/resources/application.yml 파일 : 레파지토리 연결
+``` yml
+<pre>
 spring:
 	cloud:
 		config:
 			server:
 				git:
 					uri: https://github.com/yaboong/spring-cloud-config-repository
-
+</pre>
 
 #### 5)dependency 추가
 dependencies {
@@ -158,4 +174,4 @@ dependencies {
 #### 4. config서버의 설정정보 강제 재로딩: (POST) http://localhost:8000/refresh
 ![image](https://user-images.githubusercontent.com/45334819/60979705-1ffe4b80-a36e-11e9-8f30-10a1471b51f1.png)
    
-5.     1번을 다시 실행(개별서비스 refresh)하고 확인
+#### 5. 1번을 다시 실행(개별서비스 refresh)하고 확인
