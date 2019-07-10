@@ -104,7 +104,10 @@ zuul:
 #라우팅 상세정보: http://210.102.77.219:8010/routes?format=details
 ```
 
+<hr />
+
 ### [zuul filter]
+
 
 ##### 1. PRE Filter - 라우팅전에 실행되며 필터이다. 주로 logging, 인증등이 pre Filter에서 이루어 진다.  
 ##### 2. ROUTING Filter - 요청에 대한 라우팅을 다루는 필터이다. Apache httpclient를 사용하여 정해진 Url로 보낼수 있고, Neflix Ribbon을 사용하여 동적으로 라우팅 할 수도 있다.  
