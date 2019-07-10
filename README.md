@@ -32,6 +32,7 @@
 
 #### 1. [MSA](https://github.com/jukyellow/msapdoc/blob/master/document/1_%EA%B0%9C%EC%9A%941_MSA.md "MSA")
 #### 2. [Spring Cloud](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/document/1_%EA%B0%9C%EC%9A%942_%EC%8A%A4%ED%94%84%EB%A7%81%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C.md "Spring Cloud")
+#### 2-1. [Spring-Config-Server](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_%EA%B5%AC%ED%98%841_Backend2_SpringCould.md)
 
 ### 개발환경
 
