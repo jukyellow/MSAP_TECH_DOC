@@ -1,97 +1,161 @@
-0.참고자료
-1)자바기반의 마이크로서비스 이해와 아키텍처 구축하기
->https://github.com/architectstory/msa-architecture-config-server
-2)마스터링 스프링클라우드
-https://github.com/piomin/sample-spring-cloud-netflix/tree/config/sample-config-service
+#### -예제 참고:  https://yaboong.github.io/spring-cloud/2018/11/25/spring-cloud-config/
 
->config서버 설명: 
--개발/운영이 서로다른 공통변수(DB 접속정보등)를 설정파일로 등록해두고, ms가 구동될때 동적으로 참조가능하도록 함
--dev/real 환경정보를 git저장소에 한군데 저장하고, config서버로 로딩, 변경시 refresh로 반영등 효율적으로 환경정보 반영
 
->따라하기 좋은 설명 :  http://blog.leekyoungil.com/?p=352
- 1) config 정보 xml 생성 :  {프로젝트명}-{환경명}.{yml 또는 properties}
-   > 개발/운영이 서로다른 설정정보나, 서비스에서 공통적으로 쓰는 공통참조변수(상수)값들을 config에 기재
- 2) config 서버 on : public/private 레파지토리 고려해서 git-url 설정 > 테스팅 : http://localhost:8888/msaconfig/greeting
- 3) 사용(client)
-  3-1) client 실행시 :  
-    3-1-1) -Dspring.profiles.active={환경} 로 페라미터 세팅 > 해당 정보로딩하여 실행
-    3-1-2) bootstrap.xml에 spring.profiles.active={환경} 정보를 미리 세팅
-  3-2) bootstrap.yml파일은 spring cloud application에서 application.yml 파일보다 먼저 실행이 되기 때문에,
-        config 서버의 설정을 써주면 bootrun 되기 전 Config Server에서 환경에 맞는 설정 파일을 불러와 실행이 되게 됩니다.
-  3-3) 공통참조변수 사용방법 :  @RefreshScope추가 + refresh
-    =>오류있어서 사용못함
-    >@Value : 멤버변수에 적용  ex) @Value("${msapconfig.db-ip}") private String configDbIp;
-    >@ConfigurationProperties : 클래스상단에 적용
-    >https://m.mkexdev.net/414
-  3-4) 동적 재반영 방법 : 
-    3-4-1) config서버 변경파일(xml) 반영: http://~~:8888/config-server/refresh
-    3-4-2) 개별 micro-service에 내려받기: ms재기동 or 도메인/ms주소/actuator/refresh 명령으로 config 재로딩 가능
+### 1.Config Client(개별 서비스) 설정
 
- 4)참고소스
- >https://github.com/yaboong/spring-cloud-config-server
- >https://github.com/yaboong/spring-cloud-config-client/blob/master/src/main/resources/application.yml
-----------------------------------------------------------------------------------------------
 
-1. dependency
+#### 1)conifg 서버의 properties 속성을 가져다 쓸때
+<pre> `java
+@RestController
+@RefreshScope
+public class ConfigClientController {
+	@Value("${who.am.i}")
+	private String identity;
+	@GetMapping("/test")
+	public String test() {
+		return identity;
+	}
+}
+</pre>
 
-1-1) 버전(마스터링 스프링클라우드)
--<java.version>1.8</java.version>
--springBootVersion = '1.5.6.RELEASE'
--springCloudVersion = 'Dalston.SR4'
 
-1-2) 라이브러리 (자바기반 마이크로.. 구축하기)
-compile('org.springframework.boot:spring-boot-starter-actuator')
-	compile('org.springframework.cloud:spring-cloud-config-server')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+#### 2)개별 서비스에서 refresh로 다시 읽어올때
+management:
+	security:
+		enabled: true
+	endpoints:
+	web:
+		exposure:
+			include: refresh # or '*'
+- 개별서비스 port의 (actuator)refresh를 날려줌
+- (POST) http://localhost:8081/refresh
+- Refresh 정상동작여부 확인법 : 하단 3번 참고
 
-2. config & annotaion
 
-2-1) yml 
- -----------------------------------------------------------
->config서버 application.yml
+#### 3)개별서비스에서 config 서버 설정
 server:
-  port: 8888
-  
-spring:
-  application:
-    name: msa-architecture-config-server
-    
-  cloud:
-    config:
-      server:
-        git: 
-          uri: https://github.com/architectstory/msa.git
-          username: username
-          password: password
-
->git저장소 config-server.yml
-msaconfig:
-  greeting: "hello"
-  
----
+	port: 8081
 
 spring:
-  profiles: local
+	application:
+		name: yaboong
+	cloud:
+		config:
+			uri: http://localhost:8080
 
-msaconfig:
-  greeting: "welcome to local server"
 
----
+#### 4)개별서비스의 dependency
+dependencies {
+	implementation('org.springframework.boot:spring-boot-starter-web')
+	implementation('org.springframework.cloud:spring-cloud-starter-config')
+	implementation('org.springframework.boot:spring-boot-starter-actuator')
+}
 
+
+#### 5)micro-service 실행시, 페라미터 전달( 환경변수로 spring.profiles.active 정보를 설정함)
+>JVM옵션설정으로  Spring Profile 기능은 3.1 버전 이상부터 지원합니다.
+-Dspring.profiles.active=live
+-Dspring.profiles.active=dev
+-Dspring.profiles.active=local
+>local 스프링부트 실행시, bootstrap.xml에 spring.profiles.active={환경} 정보를 미리 세팅
+>도커 실행시 Dockerfile ENDPOINT 부분에 설정(-Dspring.profiles.active=live)하고 시작?
+
+
+
+
+### 2.Config server 설정
+
+
+#### 1)git레파지토리에 YAML 파일생성
+- ${ApplicationName}-${EnvironmentName}.yml 로 해주는 것이 디폴트
+- ex) msap-zuul-server-dev.yml
+
+
+#### 2)config 파일의 예
+- msap-zuul-server-local.yml
+<pre> `yml
+#local enviroment
+eureka:
+  server:
+    ip: localhost
+    port: 8002    
+
+zuul:
+  server:
+    port: 8010  #port: 8002 #8000~01:config, 8002~8009:Eureka, 8010~19:zuul, 8020~24:인증, 8025~29:Redis, 8100~:ms
+
+#Zuul-Jdbc(nlps)
 spring:
-  profiles: dev
+  db1:
+    datasource:
+      driverClassName : oracle.jdbc.driver.OracleDriver
+      url : jdbc:oracle:thin:@000.000.000.0000:1521:cheetah
+      username : nlps
+      password : nlps2012
+      maxActive : 5
+#User-Info(KCSEDAS)
+  db2:
+    datasource:
+      driverClassName : oracle.jdbc.driver.OracleDriver
+      url : jdbc:oracle:thin:@000.000.000.0000:1521:coyote11
+      username: kcsedas
+      password: edaskcs_2016
+      maxActive: 5
 
-msaconfig:
-  greeting: "welcome to dev server"
+test:
+  reload:
+    val: reload data now 10!
+</pre>
 
----
+-yaboong-live.yml
+who:
+	am:
+	i: live-yaboong
 
- -----------------------------------------------------------
+#### 3)Java Annotation 추가
+<pre> `java
+@SpringBootApplication
+@EnableConfigServer
+public class ConfigServerApplication {
+	public static void main(String[] args) {
+		SpringApplication.run(ConfigServerApplication.class, args);
+	}
+}
+</pre>
 
-2-2) java 
--서버구동: @EnableConfigServer
--추가기능:
- >설정재반영: http://주소/프로파일명(git설정파일명)/refresh
-   ex) http://~~:8888/config-server/refresh
- >config정보 읽기(get) ex) http://localhost:8888/msaconfig/greeting
 
+#### 4) src/main/resources/application.yml 파일 : 레파지토리 연결
+spring:
+	cloud:
+		config:
+			server:
+				git:
+					uri: https://github.com/yaboong/spring-cloud-config-repository
+
+
+#### 5)dependency 추가
+dependencies {
+	implementation('org.springframework.cloud:spring-cloud-config-server')
+}
+- ${ApplicationName}-${EnvironmentName}.yml 로 해주는 것이 디폴트
+
+
+<hr />
+
+### 3.Refresh 정상동작 확인방법
+
+#### 1.  개별서비스에서 config정보 재로딩:  (POST) http://localhost:8010/refresh
+![image](https://user-images.githubusercontent.com/45334819/60979652-0bba4e80-a36e-11e9-952c-6a44f6bdadbb.png)
+
+#### 2. 로딩된 값 확인(RestController를 추가하여 변수값 찍는 코드 추가구현)
+    => (GET) http://localhost:8010/config/reload
+![image](https://user-images.githubusercontent.com/45334819/60979678-1543b680-a36e-11e9-8c5d-617d55221502.png)
+
+#### 3. 새로운 값이 적용되지 않았으면, config서버에 로딩된 yml파일 확인
+    => (GET) http://localhost:8010/msap-zuul-server/local
+![image](https://user-images.githubusercontent.com/45334819/60979689-1a086a80-a36e-11e9-8c6f-24645650ebaf.png)
+
+#### 4. config서버의 설정정보 강제 재로딩: (POST) http://localhost:8000/refresh
+![image](https://user-images.githubusercontent.com/45334819/60979705-1ffe4b80-a36e-11e9-8f30-10a1471b51f1.png)
+   
+5.     1번을 다시 실행(개별서비스 refresh)하고 확인
