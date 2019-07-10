@@ -1,28 +1,28 @@
-0.Âü°íÀÚ·á
-1)ÀÚ¹Ù±â¹ÝÀÇ ¸¶ÀÌÅ©·Î¼­ºñ½º ÀÌÇØ¿Í ¾ÆÅ°ÅØÃ³ ±¸ÃàÇÏ±â
+0.ì°¸ê³ ìžë£Œ
+1)ìžë°”ê¸°ë°˜ì˜ ë§ˆì´í¬ë¡œì„œë¹„ìŠ¤ ì´í•´ì™€ ì•„í‚¤í…ì²˜ êµ¬ì¶•í•˜ê¸°
 >https://github.com/architectstory/msa-architecture-zuul-server
-2)¸¶½ºÅÍ¸µ ½ºÇÁ¸µÅ¬¶ó¿ìµå
+2)ë§ˆìŠ¤í„°ë§ ìŠ¤í”„ë§í´ë¼ìš°ë“œ
 >https://github.com/piomin/sample-spring-cloud-netflix/tree/cluster/sample-gateway-service
 
-3)È°¿ë/ÀÌ·Ð Âü°í
+3)í™œìš©/ì´ë¡  ì°¸ê³ 
 >https://elky84.github.io/2018/09/23/java_zuul_use_story/
 
->zuul¼­¹ö ¼³¸í: 
--»ç¿ëÀÚ¿äÃ»ÀÌ µé¾î¿À¸é ÇØ´ç ¸¶ÀÌÅ©·Î¼­ºñ½º¸¦ ¶ó¿ìÆÃÁ¤º¸¿¡ µû¶ó ¶ó¿ìÆÃÇÏ´Âµ¥,
- ÀÌ¶§ ¼­ºñ½ºID¸¦ À¯·¹Ä«¼­¹ö¿¡¼­ Ã£¾Æ¼­ ¶ó¿ìÆÃ °æ·Î¸¦ ¼³Á¤ÇÏ°Ô µÊ.
+>zuulì„œë²„ ì„¤ëª…: 
+-ì‚¬ìš©ìžìš”ì²­ì´ ë“¤ì–´ì˜¤ë©´ í•´ë‹¹ ë§ˆì´í¬ë¡œì„œë¹„ìŠ¤ë¥¼ ë¼ìš°íŒ…ì •ë³´ì— ë”°ë¼ ë¼ìš°íŒ…í•˜ëŠ”ë°,
+ ì´ë•Œ ì„œë¹„ìŠ¤IDë¥¼ ìœ ë ˆì¹´ì„œë²„ì—ì„œ ì°¾ì•„ì„œ ë¼ìš°íŒ… ê²½ë¡œë¥¼ ì„¤ì •í•˜ê²Œ ë¨.
 
->zuulÇÊÅÍ, ¶ó¿ìÆÃ µ¿Àûº¯°æ
+>zuulí•„í„°, ë¼ìš°íŒ… ë™ì ë³€ê²½
 https://nevercaution.github.io/2018/10/23/api-gateway-with-zuul/
 ----------------------------------------------------------------------------------------------
 
 1. dependency
 
-1-1)¹öÀü (¸¶½ºÅÍ¸µ ½ºÇÁ¸µÅ¬¶ó¿ìµå)
+1-1)ë²„ì „ (ë§ˆìŠ¤í„°ë§ ìŠ¤í”„ë§í´ë¼ìš°ë“œ)
 -<java.version>1.8</java.version>
 -springBootVersion = '1.5.6.RELEASE'
 -springCloudVersion = 'Dalston.SR4'
 
-1-2)¶óÀÌºê·¯¸®(ÀÚ¹Ù±â¹Ý ¸¶ÀÌÅ©·Î.. ±¸ÃàÇÏ±â)
+1-2)ë¼ì´ë¸ŒëŸ¬ë¦¬(ìžë°”ê¸°ë°˜ ë§ˆì´í¬ë¡œ.. êµ¬ì¶•í•˜ê¸°)
 	compile('org.springframework.boot:spring-boot-starter-actuator')
 	compile('org.springframework.cloud:spring-cloud-starter-config')
 	compile('org.springframework.cloud:spring-cloud-starter-eureka')
@@ -34,9 +34,9 @@ https://nevercaution.github.io/2018/10/23/api-gateway-with-zuul/
 
 2. config & annotaion
 
-2-1) yml (ÀÚ¹Ù±â¹Ý ¸¶ÀÌÅ©·Î.. ±¸ÃàÇÏ±â)
+2-1) yml (ìžë°”ê¸°ë°˜ ë§ˆì´í¬ë¡œ.. êµ¬ì¶•í•˜ê¸°)
  -----------------------------------------------------------
->zuul¼­¹ö application.yml
+>zuulì„œë²„ application.yml
 server:
   port: 9090
     
@@ -71,13 +71,13 @@ zuul:
       path: /coffeeStatus/**
       serviceId: msa-service-coffee-status
 
->Å¬·¯½ºÅÍ 3ÁßÈ­ ±¸¼º¿¹Á¦ : https://github.com/piomin/sample-spring-cloud-netflix/blob/cluster/sample-gateway-service/src/main/resources/application.yml
+>í´ëŸ¬ìŠ¤í„° 3ì¤‘í™” êµ¬ì„±ì˜ˆì œ : https://github.com/piomin/sample-spring-cloud-netflix/blob/cluster/sample-gateway-service/src/main/resources/application.yml
  -----------------------------------------------------------
 
 2-2) java 
--¼­¹ö±¸µ¿: @EnableZuulProxy, @EnableEurekaClient
--Ãß°¡±â´É (ÀÚ¹Ù±â¹Ý ¸¶ÀÌÅ©·Î.. ±¸ÃàÇÏ±â)
- >ÇÊÅÍÀçÁ¤ÀÇ 
-   1) HttpServletRequest/Response Àâ¾Æ¼­ º¯°æ
+-ì„œë²„êµ¬ë™: @EnableZuulProxy, @EnableEurekaClient
+-ì¶”ê°€ê¸°ëŠ¥ (ìžë°”ê¸°ë°˜ ë§ˆì´í¬ë¡œ.. êµ¬ì¶•í•˜ê¸°)
+ >í•„í„°ìž¬ì •ì˜ 
+   1) HttpServletRequest/Response ìž¡ì•„ì„œ ë³€ê²½
       ex)public class SimpleFilter extends ZuulFilter { ... }
-   2) ¶ó¿ìÆÃÁ¤º¸´Â ±âº» ¼³Á¤ÆÄÀÏ¿¡¼­ ·ÎµùÇÏµµ·Ï µÇ¾îÀÖ´Âµ¥, DB¿¡¼­ ·ÎµùÇÏµµ·Ï ÀçÁ¤ÀÇ°¡ °¡´ÉÇÏ´Ù°íÇÔ...
+   2) ë¼ìš°íŒ…ì •ë³´ëŠ” ê¸°ë³¸ ì„¤ì •íŒŒì¼ì—ì„œ ë¡œë”©í•˜ë„ë¡ ë˜ì–´ìžˆëŠ”ë°, DBì—ì„œ ë¡œë”©í•˜ë„ë¡ ìž¬ì •ì˜ê°€ ê°€ëŠ¥í•˜ë‹¤ê³ í•¨...
