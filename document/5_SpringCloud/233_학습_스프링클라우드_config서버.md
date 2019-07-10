@@ -5,7 +5,7 @@
 
 
 #### 1)conifg 서버의 properties 속성을 가져다 쓸때
-<pre> `java
+<pre>`java
 @RestController
 @RefreshScope
 public class ConfigClientController {
