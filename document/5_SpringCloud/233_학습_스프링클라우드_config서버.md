@@ -63,7 +63,7 @@ dependencies {
 - 도커 실행시 Dockerfile ENDPOINT 부분에 설정(-Dspring.profiles.active=live)하고 시작?  
 
 
-
+<hr />
 
 ### 2.Config server 설정
 
