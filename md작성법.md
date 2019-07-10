@@ -51,6 +51,7 @@ test..2
  ![image](url...)  
  
  - 특정언어를 지정해주면 pre에서 색상표시됨  
+ > ex: ``` c  
  ``` c  
  <pre>
   int a;
