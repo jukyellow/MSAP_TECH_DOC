@@ -50,7 +50,7 @@ test..2
 
  ![image](url...)  
  
- - code block을 표시할때 : <pre> 또는 <code>
+ - code block을 표시할때 : pre 또는 code
  <pre>
   int a;
  </pre>
