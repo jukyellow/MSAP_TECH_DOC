@@ -6,7 +6,6 @@
 
 #### 1)conifg 서버의 properties 속성을 가져다 쓸때
 ``` java
-<pre>
 @RestController
 @RefreshScope
 public class ConfigClientController {
@@ -17,7 +16,6 @@ public class ConfigClientController {
 		return identity;
 	}
 }
-</pre>
 ```
 
 #### 2)개별 서비스에서 refresh로 다시 읽어올때
