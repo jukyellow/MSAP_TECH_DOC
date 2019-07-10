@@ -18,7 +18,7 @@ public class ConfigClientController {
 	}
 }
 </pre>
-
+```
 
 #### 2)개별 서비스에서 refresh로 다시 읽어올때
 ```yml
@@ -31,6 +31,7 @@ management:
 		exposure:
 			include: refresh # or '*'
 </pre>
+```
 - 개별서비스 port의 (actuator)refresh를 날려줌
 - (POST) http://localhost:8081/refresh
 - Refresh 정상동작여부 확인법 : 하단 3번 참고
@@ -49,7 +50,7 @@ spring:
 		config:
 			uri: http://localhost:8080
 </pre>
-
+```
 #### 4)개별서비스의 dependency
 ```groovy
 <pre>
@@ -59,7 +60,7 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-actuator')
 }
 </pre>
-
+```
 
 #### 5)micro-service 실행시, 페라미터 전달( 환경변수로 spring.profiles.active 정보를 설정함)  
 - JVM옵션설정으로  Spring Profile 기능은 3.1 버전 이상부터 지원합니다.  
@@ -116,15 +117,15 @@ test:
   reload:
     val: reload data now 10!
 </pre>
-
--yaboong-live.yml
+```
+- yaboong-live.yml
 ``` yml
 <pre>
 who:
 	am:
 		i: live-yaboong
-</pre
-
+</pre>
+```
 #### 3)Java Annotation 추가
 ``` java
 <pre>
@@ -136,7 +137,7 @@ public class ConfigServerApplication {
 	}
 }
 </pre>
-
+```
 
 #### 4) src/main/resources/application.yml 파일 : 레파지토리 연결
 ``` yml
@@ -148,7 +149,7 @@ spring:
 				git:
 					uri: https://github.com/yaboong/spring-cloud-config-repository
 </pre>
-
+```
 #### 5)dependency 추가
 dependencies {
 	implementation('org.springframework.cloud:spring-cloud-config-server')
