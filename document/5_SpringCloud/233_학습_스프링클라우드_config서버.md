@@ -20,7 +20,6 @@ public class ConfigClientController {
 
 #### 2)개별 서비스에서 refresh로 다시 읽어올때
 ```yml
-<pre>
 management:
   security:
     enabled: true
@@ -28,7 +27,6 @@ management:
     web:
       exposure:
         include: refresh # or '*'
-</pre>
 ```
 - 개별서비스 port의 (actuator)refresh를 날려줌
 - (POST) http://localhost:8081/refresh
@@ -37,7 +35,6 @@ management:
 
 #### 3)개별서비스에서 config 서버 설정
 ```yml
-<pre>
 server:
   port: 8081
 
@@ -47,17 +44,14 @@ spring:
   cloud:
     config:
       uri: http://localhost:8080
-</pre>
 ```
 #### 4)개별서비스의 dependency
 ```groovy
-<pre>
 dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-web')
 	implementation('org.springframework.cloud:spring-cloud-starter-config')
 	implementation('org.springframework.boot:spring-boot-starter-actuator')
 }
-</pre>
 ```
 
 #### 5)micro-service 실행시, 페라미터 전달( 환경변수로 spring.profiles.active 정보를 설정함)  
@@ -82,7 +76,6 @@ dependencies {
 #### 2)config 파일의 예
 - msap-zuul-server-local.yml
 ``` yml
-<pre> 
 #local enviroment
 eureka:
   server:
@@ -114,19 +107,15 @@ spring:
 test:
   reload:
     val: reload data now 10!
-</pre>
 ```
 - yaboong-live.yml
 ``` yml
-<pre>
 who:
   am:
     i: live-yaboong
-</pre>
 ```
 #### 3)Java Annotation 추가
 ``` java
-<pre>
 @SpringBootApplication
 @EnableConfigServer
 public class ConfigServerApplication {
@@ -134,19 +123,16 @@ public class ConfigServerApplication {
 		SpringApplication.run(ConfigServerApplication.class, args);
 	}
 }
-</pre>
 ```
 
 #### 4) src/main/resources/application.yml 파일 : 레파지토리 연결
 ``` yml
-<pre>
 spring:
   cloud:
     config:
       server:
         git:
           uri: https://github.com/yaboong/spring-cloud-config-repository
-</pre>
 ```
 #### 5)dependency 추가
 dependencies {
