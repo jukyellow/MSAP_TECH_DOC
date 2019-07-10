@@ -50,12 +50,14 @@ test..2
 
  ![image](url...)  
  
- - 특정언어를 지정해주면 pre에서 색상표시됨  
- > ex: ``` c  
- ``` c  
+ - code block을 표시할때 : <pre> 또는 <code>
  <pre>
   int a;
  </pre>
-```
 
-- ..
+ - 특정언어를 지정해주면서 소스코드를 입력할때
+ > ex: ``` java  
+ ``` java
+  int a;
+  public void getVar(int b){ return a; }
+```
