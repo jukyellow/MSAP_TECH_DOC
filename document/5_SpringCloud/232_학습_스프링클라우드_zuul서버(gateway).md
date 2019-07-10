@@ -106,20 +106,20 @@ zuul:
 
 ### [zuul filter]
 
-#### 1.PRE Filter - 라우팅전에 실행되며 필터이다. 주로 logging, 인증등이 pre Filter에서 이루어 진다.
-#### 2.ROUTING Filter - 요청에 대한 라우팅을 다루는 필터이다. Apache httpclient를 사용하여 정해진 Url로 보낼수 있고, Neflix Ribbon을 사용하여 동적으로 라우팅 할 수도 있다.
-#### 3.POST Filter - 라우팅 후에 실행되는 필터이다. response에 HTTP header를 추가하거나, response에 대한 응답속도, Status Code, 등 응답에 대한 statistics and metrics을 수집한다.
-#### 4.ERROR Filter - Routing에러 또는 Micro-Service 에러 발생시 실행되는 필터이다.
-#### 5.Custom Filter - Pre Filter의 오류발생시 Custom Filter로 받아서 응답처리
+##### 1. PRE Filter - 라우팅전에 실행되며 필터이다. 주로 logging, 인증등이 pre Filter에서 이루어 진다.  
+##### 2. ROUTING Filter - 요청에 대한 라우팅을 다루는 필터이다. Apache httpclient를 사용하여 정해진 Url로 보낼수 있고, Neflix Ribbon을 사용하여 동적으로 라우팅 할 수도 있다.  
+##### 3. POST Filter - 라우팅 후에 실행되는 필터이다. response에 HTTP header를 추가하거나, response에 대한 응답속도, Status Code, 등 응답에 대한 statistics and metrics을 수집한다.  
+##### 4. ERROR Filter - Routing에러 또는 Micro-Service 에러 발생시 실행되는 필터이다.  
+##### 5. Custom Filter - Pre Filter의 오류발생시 Custom Filter로 받아서 응답처리  
 
 #### - 필터처리 순서 처리순서
-1)정상: Pre filter -> Routing Filter -> Post Filter
-2)Pre Filter 오류: Pre Filter -> Customs Filter -> Error Filter-> Post Filter
-3)Route Filter 또는 MicroService오류 : Pre Filter -> Routing Filter -> Error Filter -> Post Filter
+1)정상: Pre filter -> Routing Filter -> Post Filter  
+2)Pre Filter 오류: Pre Filter -> Customs Filter -> Error Filter-> Post Filter  
+3)Route Filter 또는 MicroService오류 : Pre Filter -> Routing Filter -> Error Filter -> Post Filter  
 
 
 #### - 필터별 역할 (예)
-1)Pre Filter         : 인증, 로깅
-2)Customs Filter: 인증 오류응답 처리 
-3)Error Filter      :  라우팅/MS오류 오류응답 처리
-4)Post Filter       : 동시접속 관리
+1)Pre Filter         : 인증, 로깅  
+2)Customs Filter: 인증 오류응답 처리   
+3)Error Filter      :  라우팅/MS오류 오류응답 처리  
+4)Post Filter       : 동시접속 관리  
