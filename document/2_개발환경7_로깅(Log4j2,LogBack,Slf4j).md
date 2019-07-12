@@ -1,25 +1,18 @@
-# Spring Boot 로깅(Log4j2, LogBack, Slf4j)
-
-## [Spring Boot + Log4j2(or logback) + Slf4j 적용]
+# Logging (Spring Boot + Log4j2(or logback) + Slf4j )
 
 
-* 현행 nlps에서 API호출시 로깅을 주석처리함
-    * 로그가 Async(비동기)하지 않게 남아서 느려졌다고 함
-    * 그 원인이 SLF4J를 쓴거에 기인했다고 함
-    * 확인결과: Log4j Appender 설정시 AsyncAppender를 제대로 설정하지 못했기때문.
-        * 모든 log 처리(java.sql포함)에 AsyncAppender가 동시 설정될때 비동기로 처리되는 듯함.
-
-
-* log4j2, logback 모두 설정가능하지만, log4j2를 설정가능
+### 0. log4j2, logback 모두 설정가능하지만, log4j2를 설정가능
     * log4j 사용시 logging 패키지 전체를 제거하고 진행해야되서, 일단 logback을 사용하도록함.
     * Spring Boot 기본 로깅 시스템이 logback을 사용
 
+<hr />
+<br>
 
-1.Spring Boot + Logback + Slf4j 설정
+## [Spring Boot + Logback + Slf4j 설정]
 
 
-1. dependency : 추가없음
-2. properties설정
+### 1. dependency : 추가없음
+### 2. properties설정
 ```properties
 #for color print
 spring.output.ansi.enabled= always
@@ -27,17 +20,15 @@ spring.output.ansi.enabled= always
 logging.path= /logs
 logging.file= ${spring.application.name}
 ```
-3. java
+
+### 3. java
 ``` java
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 ...
-
-
 @RestController
 public class RestController {
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(RestController.class);
-
 
     @GetMapping("/config/reload")
     public String doReloadConfig() {
@@ -46,7 +37,8 @@ public class RestController {
     }
 }
 ```
-4. logback-spring.xml 설정
+
+### 4. logback-spring.xml 설정
 ```xml
 <configuration>
     <!-- <property name="CONSOL_LOG_FORMAT" value="%5p \(%F[%M]:%L\) [%d{yyyy/MM/dd HH:mm:ss}] - %m%n" />
@@ -130,37 +122,30 @@ public class RestController {
     <root level="INFO">
         <appender-ref ref="ASYNC_CONSOL_APPENDER" />
     </root>
-
-
 </configuration>
 ```
 
+<hr />
+<br>
 
-2.Spring Boot + Log4j2 + Slf4j 설정
-
-
-[Spring Boot 설정 예]
-
+## [Spring Boot + Log4j2 + Slf4j]
 
 * 참고: https://madplay.github.io/post/spring-boot-log4j2
 
 
-1. dependency
+### 1. dependency
 ```groovy
 //aphache.logging.log4j 전체를 제외함(default logback 패키지와 충돌발생, 부분제외로 해결안되었음.)
 configurations {
     all*.exclude group: 'org.springframework.boot', module : 'spring-boot-starter-logging'
 }
-
-
 //log4j, slf4j 관련 dependency 추가
  implementation ('org.springframework.boot:spring-boot-starter-log4j2') //log4j2    
  implementation 'org.slf4j:slf4j-api'
  implementation 'org.apache.logging.log4j:log4j-slf4j-impl'
 ```
 
-
-2. properties설정
+### 2. properties설정
 ```properties
 #for color print
 spring.output.ansi.enabled= always
@@ -169,8 +154,7 @@ logging.path= /logs
 logging.file= ${spring.application.name}
 ```
 
-
-3. log4j2.xml 정의
+### 3. log4j2.xml 정의
 * 의존성 설정 이후에는 src/main/resources 경로에 log4j2.xml 파일을 생성합니다.
 * XML이 아닌 프로퍼티 설정 파일로도 진행할 수 있는데 그 경우에는 log4j2.properties을 생성하면 됩니다.
 ```xml
@@ -180,7 +164,6 @@ logging.file= ${spring.application.name}
         <Property name="LOG_FORMAT">%d{yyyy-MM-dd HH:mm:ss} %p %m%n</Property>
         <Property name="BASE_DIR">/Users/madplay/Desktop/bootdemo</Property>
     </Properties>
-
 
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT" follow="true">
@@ -202,7 +185,6 @@ logging.file= ${spring.application.name}
         </RollingFile>
     </Appenders>
 
-
     <Loggers>
         <Root level="info">
             <AppenderRef ref="Console"/>
@@ -223,7 +205,6 @@ logging.file= ${spring.application.name}
         <Property name="LEVEL">debug</Property> <!-- ${zuul.logger.level} -->
         <Property name="APP_NAME">aircargotrace</Property>
     </Properties>
-
 
     <Appenders>
         <Console name="CONSOLE_APPENDER" target="SYSTEM_OUT" follow="true">
@@ -273,7 +254,6 @@ logging.file= ${spring.application.name}
         </Async>
     </Appenders>
 
-
     <Loggers>
         <Logger name="org.springframework" level="info" additivity="false">
             <AppenderRef ref="ASYNC_CONSOL_APPENDER"/>
@@ -294,14 +274,11 @@ logging.file= ${spring.application.name}
 </Configuration>
 ```
 
-
-4. java code
+### 4. java code
 ```java
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 ...
-
-
 @RestController
 @RefreshScope
 public class RestController {
@@ -327,17 +304,16 @@ public class RestController {
 
 * 참고:  https://howtodoinjava.com/log4j2/log4j2-properties-example/
 * application.properties를 통한 로깅 설정
-log4j2.properties
+- log4j2.properties
+<pre>
 status = error
 name = PropertiesConfig
-
 
 #Make sure to change log file path as per your need
 property.filename = C:\\logs\\debug.log
 filters = threshold
 filter.threshold.type = ThresholdFilter
 filter.threshold.level = debug
-
 
 appenders = rolling
 appender.rolling.type = RollingFile
@@ -356,17 +332,15 @@ appender.rolling.strategy.type = DefaultRolloverStrategy
 appender.rolling.strategy.max = 20
 loggers = rolling
 
-
 #Make sure to change the package structure as per your application
 logger.rolling.name = com.howtodoinjava
 logger.rolling.level = debug
 logger.rolling.additivity = false
 logger.rolling.appenderRef.rolling.ref = RollingFile
-
-
-
+</pre>
 
 * 기타 개별 패키지 제외 방법 gradle exclude: 
+```groovy
 dependencies {
     implementation('log4j:log4j:1.2.15') {
         exclude group: 'javax.jms', module: 'jms'
@@ -374,9 +348,11 @@ dependencies {
         exclude group: 'com.sun.jmx', module: 'jmxri'
     }
 }
-
+```
 
 * logback 관련 전체를 제외하고자 할때: 단, spring boot log자체가 기존형태와(logback)달라지고 log4j식으로 찍혀서 불편함
+``` groovy
 configurations {
     all*.exclude module : 'spring-boot-starter-logging'
 }
+```
