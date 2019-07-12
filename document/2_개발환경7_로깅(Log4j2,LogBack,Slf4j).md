@@ -303,6 +303,8 @@ public class RestController {
 }
 ```
 
+<hr />
+<br>
 
 * 참고:  https://howtodoinjava.com/log4j2/log4j2-properties-example/
 * application.properties를 통한 로깅 설정
