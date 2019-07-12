@@ -40,6 +40,8 @@
 
 #### 1. [STS](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/document/2_%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD1_STS.md "STS")
 #### 2. [Gradle](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/document/2_%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD2_Gradle.md "Gradle")
+#### 3. [Logging](https://github.com/jukyellow/msa-side-proj/blob/master/document/2_%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD7_%EB%A1%9C%EA%B9%85(Log4j2%2CLogBack%2CSlf4j))
+
 
 ### CI/CD
 
