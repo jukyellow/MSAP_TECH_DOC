@@ -155,6 +155,7 @@ logging.file= ${spring.application.name}
 ```
 
 ### 3. log4j2.xml 정의
+#### 3-1. 예제
 * 의존성 설정 이후에는 src/main/resources 경로에 log4j2.xml 파일을 생성합니다.
 * XML이 아닌 프로퍼티 설정 파일로도 진행할 수 있는데 그 경우에는 log4j2.properties을 생성하면 됩니다.
 ```xml
@@ -193,7 +194,8 @@ logging.file= ${spring.application.name}
     </Loggers>
 </Configuration>
 ```
-* Log4j2 Async Appender
+
+#### 3-2. Log4j2 Async Appender
 * 기타: <includeLocation>true</includeLocation>  # 전송시 에러예방:  https://docs.ncloud.com/ko/elsa/elsa-1-5-6.html
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
