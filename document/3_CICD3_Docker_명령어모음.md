@@ -92,7 +92,7 @@
 ### 14. 도커 run 명령어 상세
 > docker run -d -i -t -p 9001:9001 nginx_microsvc:latest
 > docker run <옵션> <이미지 이름, ID> <명령> <매개 변수>
-<code>
+<pre>
  -d: --detach=false: Detached 모드입니다. 보통 데몬 모드라고 부르며 컨테이너가 백그라운드로 실행됩니다.
  -i: --interactive=false: 표준 입력(stdin)을 활성화하며 컨테이너와 연결(attach)되어 있지 않더라도 표준 입력을 유지합니다.
      보통 이 옵션을 사용하여 Bash에 명령을 입력합니다
@@ -100,7 +100,7 @@
     이 옵션을 설정하지 않으면 명령을 입력할 수는 있지만 셸이 표시되지 않습니다.
  -p:  --publish=[]: 호스트에 연결된 컨테이너의 특정 포트를 외부에 노출합니다.
         보통 웹 서버의 포트를 노출할 때 주로 사용합니다.
-</code>
+</pre>
 
 ### 15. dockerfile CMD 명령어 상세
 > CMD ["nginx", "-g", "daemon off;"]
@@ -148,13 +148,13 @@
 
 
 ### 0. 도커파일
------------------------------------------------------
+```docker
 FROM openjdk:8-jdk-alpine
 VOLUME /tmp
 ARG JAR_FILE
 COPY msap-zuul-server-0.1.0.war app.war
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.war"]
------------------------------------------------------
+```
 
 ### 1. 이미지 빌드(with dockerfile)
 > docker build -t msap-config-server .
