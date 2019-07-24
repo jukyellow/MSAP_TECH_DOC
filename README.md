@@ -34,7 +34,7 @@
 #### 2. [Spring Cloud](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/document/1_%EA%B0%9C%EC%9A%942_%EC%8A%A4%ED%94%84%EB%A7%81%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C.md "Spring Cloud")
   #### 2-1. [Spring-Config-Server](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_SpringCloud/233_%ED%95%99%EC%8A%B5_%EC%8A%A4%ED%94%84%EB%A7%81%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C_config%EC%84%9C%EB%B2%84.md "Spring-Config-Server")  
   #### 2-2. [Spring-Zuul-Server](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_SpringCloud/232_%ED%95%99%EC%8A%B5_%EC%8A%A4%ED%94%84%EB%A7%81%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C_zuul%EC%84%9C%EB%B2%84(gateway).md)  
-
+  #### 2-3. [Zuul-JDBC](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_%EA%B5%AC%ED%98%841_BackEnd1_Zuul-JDBC.md)  
 
 ### 개발환경
 
@@ -48,7 +48,7 @@
 
 #### 1. [Docker](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/document/3_CICD1_%EB%8F%84%EC%BB%A4.md "Docker")
 #### 2. [Docker 명령어](https://github.com/jukyellow/msa-side-proj/blob/master/document/3_CICD3_Docker_%EB%AA%85%EB%A0%B9%EC%96%B4%EB%AA%A8%EC%9D%8C.md)
-#### 3. [Docker DATA 관리](https://github.com/jukyellow/msa-side-proj/blob/master/document/3_CICD4_Docker_Data%EA%B4%80%EB%A6%AC.md)  
+#### 3. [Docker DATA 관리(Logging,Volumn,Rotate,LocalTime](https://github.com/jukyellow/msa-side-proj/blob/master/document/3_CICD4_Docker_Data%EA%B4%80%EB%A6%AC.md)  
 
 
 ### 설계
