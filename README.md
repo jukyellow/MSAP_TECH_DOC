@@ -55,7 +55,7 @@
 
 #### 1. [REST](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/document/4_%EC%84%A4%EA%B3%84_REST.md "REST")
 
-### 구현기술
+### Front End
 
 #### 1. [Vue.js](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/document/5_%EA%B5%AC%ED%98%842_UI1_Vue.js.md "Vue.js")
 #### 2. [BootStrap](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/document/5_%EA%B5%AC%ED%98%842_UI2_%EB%B6%80%ED%8A%B8%EC%8A%A4%ED%8A%B8%EB%9E%A9.md "BootStrap")
