@@ -6,8 +6,10 @@
 * 참고 : https://medium.com/dtevangelist/docker-%EA%B8%B0%EB%B3%B8-5-8-volume%EC%9D%84-%ED%99%9C%EC%9A%A9%ED%95%9C-data-%EA%B4%80%EB%A6%AC-9a9ac1db978c
 
 #### * 도커 Volumn/Bind Mount 예제
-- http://wiki.rockplace.co.kr/pages/viewpage.action?pageId=3868698
+- 도커 Volume mount 개념설명: http://wiki.rockplace.co.kr/pages/viewpage.action?pageId=3868698  
+- 도커 Volume 설정하는 다양한 방법: https://darkrasid.github.io/docker/container/volume/2017/05/10/docker-volumes.html  
 
+##### 1) 기본설정(경로를 hash코드로 자동생성하는 경우)  
 - 명령어 예제
 ``` sh
 #docker 컨테이너 내부 로그경로(/logs) -> 서버 volumn경로로 매핑
@@ -31,6 +33,13 @@ docker inspect --format="{{.Mounts}}" msap-zuul-server
 ``` yml
 VOLUME /logs
 ```
+##### 2) Volume name을 설정하는 경우  
+- 볼륨이름생성 -> 실행명령어 설정   
+``` sh
+docker volume create --name msap-zuul-server-logs
+docker run --name air-cargo-trace-test --net=host -d -p 8909:8909 -v msap-zuul-server-logs:/logs  msap-zuul-server
+```
+
 <br>
 
 ## [ 3.docker 컨테이너 TimeZone(현재시간) 설정 ]
