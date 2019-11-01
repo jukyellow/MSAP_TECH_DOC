@@ -126,3 +126,13 @@ zuul:
 2)Customs Filter: 인증 오류응답 처리   
 3)Error Filter      :  라우팅/MS오류 오류응답 처리  
 4)Post Filter       : 동시접속 관리  
+
+
+<hr />
+
+### [라우팅 Path설정시 Tip]  
+#### 1. PathMatching /aaa/path**로 처리하는 방법
+- 기본: 레퍼런스에서는 /aaa/path/** 패턴으로 /**로 끝나야함
+- 개선: /**대신 알파벳**로 끝날시, RoutingFilter에서 "/" + substr(1, serviceId 길이)로 처리해주면 됨(단. prefix 제거 조건에서)  
+
+
