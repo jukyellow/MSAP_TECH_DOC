@@ -35,6 +35,8 @@
   #### 2-1. [Spring-Config-Server](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_SpringCloud/233_%ED%95%99%EC%8A%B5_%EC%8A%A4%ED%94%84%EB%A7%81%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C_config%EC%84%9C%EB%B2%84.md "Spring-Config-Server")  
   #### 2-2. [Spring-Zuul-Server](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_SpringCloud/232_%ED%95%99%EC%8A%B5_%EC%8A%A4%ED%94%84%EB%A7%81%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C_zuul%EC%84%9C%EB%B2%84(gateway).md)  
   #### 2-3. [Zuul-JDBC](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_%EA%B5%AC%ED%98%841_BackEnd1_Zuul-JDBC.md)  
+  #### 2-4. [Zuul-Ribbon](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_%EA%B5%AC%ED%98%841_Backend2_Zuul-Ribbon.md)
+  
 
 ### 개발환경
 
