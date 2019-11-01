@@ -130,9 +130,39 @@ zuul:
 
 <hr />
 
-### [라우팅 Path설정시 Tip]  
-#### 1. PathMatching /aaa/path**로 처리하는 방법
+### [Zuul 환경설정]  
+#### 1. 라우팅: PathMatching /aaa/path**로 처리하는 방법
 - 기본: 레퍼런스에서는 /aaa/path/** 패턴으로 /**로 끝나야함
 - 개선: /**대신 알파벳**로 끝날시, RoutingFilter에서 "/" + substr(1, serviceId 길이)로 처리해주면 됨(단. prefix 제거 조건에서)  
+
+#### 2. SensitiveHeader(민감헤더 제거) 설정  
+
+1. 기본 properties 파일설정 방식:
+```
+zuul:
+routes: #=> zuul-jdbc로 db테이블에 정의함
+   serviceName:
+     sendsitiveHeader:
+```
+2. zuul-jdbc 설정
+- 컬럼명: zuul_routes.SENSITIVE_HEADERS
+3.설명
+- sendsitiveHeader 설정시, 설정한 민감헤더를 제거함
+- 단, zuul은 기본적으로 Cookie, Set-Cookie, Autorization은 통과시팀
+
+4. 설정방법
+4-1. sendsitiveHeader : 미설정 > 전체 통과시킴
+4-2. sendsitiveHeader : 'ULH-Api-Id'
+- client가 보내는 헤더정보에서 해당정보가 downstream으로 전달되지 않는다.(제거)
+
+5.확인된 오류
+- zuul-jdbc설정해서 발생하는 문제인지는 확인되지 않았으나,
+- sendsitiveHeader : Cookie, Set-Cookie, Autorization을 설정하여도 cookie정보가 제거되지 않고 전달됨을 확인함  
+
+
+
+
+
+
 
 
