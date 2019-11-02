@@ -39,6 +39,7 @@ VOLUME /logs
 docker volume create --name msap-zuul-server-logs
 docker run --name air-cargo-trace-test --net=host -d -p 8909:8909 -v msap-zuul-server-logs:/logs  msap-zuul-server
 ```
+- dangling 볼륨 삭제: docker volume rm $(docker volume ls -qf dangling=true)
 
 <br>
 
