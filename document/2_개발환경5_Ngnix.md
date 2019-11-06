@@ -22,7 +22,7 @@ user nginx	  #default www-data, 워커 프로세스(웹서버역할)의 권한 �
 worker_processes  1;  #워커 프로세스의 수, 코어 갯수만큼 설정하면 됨  
 events { 		 #비동기 이벤트 처리옵션  
     worker_connections  1024;	         #한번에 처리할수 있는 커넥션 수   
-    # multi_accept on; (디폴트값 : off) #  
+    #multi_accept on; (디폴트값 : off) #  
 }  
 http{	  #server,location 블록을 묶음, 선언된 설정을 하위 블록이 상속받음  
      server{	  #가상호스트(웹app서비스를 제공하는 하나의 도메인)  
