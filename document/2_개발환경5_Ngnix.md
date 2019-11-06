@@ -1,23 +1,25 @@
 # Ngnix
 
-잘정리된 사이트:
-1) 개요 : https://opentutorials.org/module/384/4530  
+### 잘정리된 사이트:
+1. 개요 : https://opentutorials.org/module/384/4530  
    상세설명: http://whatisthenext.tistory.com/123  
-2) location 개로: http://kwonnam.pe.kr/wiki/nginx/location  
-3) location 정규식: http://ohgyun.com/480  
-4) 설정별 간결설명 + proxy_params: http://areumgury.blogspot.com/2016/08/nginx.html  
-5) location proxy pass의 '/'여부에 따른 URI전달 차이점 설명(중요): http://ohgyun.com/621  
-----
+2. location 개로: http://kwonnam.pe.kr/wiki/nginx/location  
+3. location 정규식: http://ohgyun.com/480  
+4. 설정별 간결설명 + proxy_params: http://areumgury.blogspot.com/2016/08/nginx.html  
+5. location proxy pass의 '/'여부에 따른 URI전달 차이점 설명(중요): http://ohgyun.com/621  
 
-1. 디렉토리 구조(도커 nginx이미지), 환경설정 파일  
->nginx.conf :  애플리케이션의 기본 환경 설정  
->root/conf.d/default.conf : server관련 설정모음  
->root/sites-enabled/default : 활성화된 사이트 설정모음?  
->root/sites-available/default : 비활성화된 사이트 설정모음?  
->proxy_params : proxy 헤더 전달 페리미터 설정  
+---
+
+### 1. 디렉토리 구조(도커 nginx이미지), 환경설정 파일  
+- nginx.conf :  애플리케이션의 기본 환경 설정  
+- root/conf.d/default.conf : server관련 설정모음  
+- root/sites-enabled/default : 활성화된 사이트 설정모음?  
+- root/sites-available/default : 비활성화된 사이트 설정모음?  
+- proxy_params : proxy 헤더 전달 페리미터 설정  
   
-2. 주요설정 및 설명  
---nginx.conf  
+### 2. 주요설정 및 설명  
+- nginx.conf  
+```
 user nginx	  #default www-data, 워커 프로세스(웹서버역할)의 권한 지정  
 worker_processes  1;  #워커 프로세스의 수, 코어 갯수만큼 설정하면 됨  
 events { 		 #비동기 이벤트 처리옵션  
@@ -56,12 +58,12 @@ http{	  #server,location 블록을 묶음, 선언된 설정을 하위 블록이 
         server unix:/var/run/php5-fpm.sock backup;  평상시엔 사용안하다가, 모든서버가 불능일때 사용  
     }  
 }  
+```
 
-----   
-Location 변경자 정규식 문법:  
+- Location 변경자 정규식 문법:  
 
-location [=|~|~*|^~|@] pattern { … }  
-  
+> location [=|~|~*|^~|@] pattern { … }  
+```  
 = : 지정 패턴과 정확히 일치  
      예)  
      server {  
@@ -82,8 +84,9 @@ location [=|~|~*|^~|@] pattern { … }
 ^~ : 지정한 패턴으로 시작해야 한다. 패턴이 일치하면 엔진엑스가 다른 패턴의 탐색을 중지한다.    
      (정규표현식이 아닌 것에 주의한다)  
 @ : 이름가진 location 블럭을 정의한다. 내부 요청에 의해서만 접근할 수 있다.  
+```
 
-### 검색 순서와 우선순위  
+### 3. 검색 순서와 우선순위  
 우선순위가 높은 것과 매칭한다.   
 블럭을 정의한 순서와는 관계가 없다.  
   
@@ -95,7 +98,8 @@ location [=|~|~*|^~|@] pattern { … }
 4. ~ 또는 ~* 변경자를 갖는 location 블럭의 패턴과 일치  
 5. 변경자가 없는 location 블럭의 시작부분과 일치  
   
-사례)  
+- 사례
+```
 server {  
   server_name website.com;  
   location /doc { (A) }  
@@ -114,13 +118,14 @@ server {
   server_name website.com;  
   location ^~ /doc { (A) }  
   location ~* ^/document$ { (B) }  
-}  
+}
+```
 http://website.com/document를 요청하면, (A)가 매칭   
   
----- 
+--- 
   
-Location proxy_pass에 '/'에 따른 URI전달 차이점 설명(http://ohgyun.com/621):  
-   
+- Location proxy_pass에 '/'에 따른 URI전달 차이점 설명(http://ohgyun.com/621):  
+```   
 Case1) location 과 proxy_pass 에 / 가 없는 경우  
      location ^~ /foo {  
          proxy_pass http://localhost:3000;  
@@ -138,10 +143,12 @@ Case3) location 에 / 가 없고, proxy_pass 에 / 가 있는 경우
      --> 프록시로 서버로 전달되는 path: //bar/baz  
            location 블럭에서 매칭된 나머지 주소(/bar/baz)가 프록시 주소의 마지막에 붙어 전달된다.  
 *case3처럼 짤리는 경우가 있으므로 주의해야함, 대략 10가지 정도의 case가 있는듯...  
-----  
+```
+
+---
   
-기타 상세설정, 키워드 설명: 
-  
+#### 기타 상세설정, 키워드 설명: 
+```
 #proxy_param 설정 : 웹서버->WAS 호출시 전달할 http 페라미터 전달  
 #미설정시 default 상속되어 전달, 하나라더 설정시 나머지는 모두 skip됨으로 주의  
 proxy_set_header X-Real-IP $remote_addr;  
@@ -160,5 +167,5 @@ proxy_temp_file_write_size 256k;
 proxy_max_temp_file_size 0;  
 proxy_read_timeout 300;  
 proxy_redirect off;  
-
+```
 
