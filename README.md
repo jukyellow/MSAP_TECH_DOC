@@ -32,12 +32,13 @@
 
 #### 1. [MSA](https://github.com/jukyellow/msapdoc/blob/master/document/1_%EA%B0%9C%EC%9A%941_MSA.md "MSA")
 #### 2. [Spring Cloud](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/document/1_%EA%B0%9C%EC%9A%942_%EC%8A%A4%ED%94%84%EB%A7%81%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C.md "Spring Cloud")
+  #### 2-0. [Eureka설정-HA구성](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_%EA%B5%AC%ED%98%841_Backend4_Eureka.md)  
   #### 2-1. [Spring-Config-Server](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_SpringCloud/233_%ED%95%99%EC%8A%B5_%EC%8A%A4%ED%94%84%EB%A7%81%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C_config%EC%84%9C%EB%B2%84.md "Spring-Config-Server")  
   #### 2-2. [Spring-Zuul-Server](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_SpringCloud/232_%ED%95%99%EC%8A%B5_%EC%8A%A4%ED%94%84%EB%A7%81%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C_zuul%EC%84%9C%EB%B2%84(gateway).md)  
   #### 2-3. [Zuul-JDBC](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_%EA%B5%AC%ED%98%841_BackEnd1_Zuul-JDBC.md)  
   #### 2-4. [Zuul-Ribbon](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_%EA%B5%AC%ED%98%841_Backend2_Zuul-Ribbon.md)
   #### 2-5. [Zuul-Cookie-UUID](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_%EA%B5%AC%ED%98%841_Backend3_Zuul-Cookie.md)  
-  #### 2-6. [Eureka-HA](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_%EA%B5%AC%ED%98%841_Backend4_Eureka.md)  
+
   
   
 
