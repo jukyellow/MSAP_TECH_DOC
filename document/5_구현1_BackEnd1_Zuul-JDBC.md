@@ -129,3 +129,65 @@ public JdbcOperations mysqlJdbcTemplate(@Autowired DataSource dataSource) {
 - 참고:  https://supawer0728.github.io/2018/03/11/Spring-Cloud-Zuul/
  
 
+<br>
+<hr>
+### 3. ZuulJdbcConnector(Zuul-Jdbc정보 로딩)  
+
+```
+public class ZuulJdbcConnector {
+	private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(ZuulJdbcConnector.class);
+	
+	//uri가 일치해야하는 case
+	public static HashMap<String,String> apiUriEqualMap = new HashMap<String, String>();
+	//uri의 마지막 path가 serviceID와 유사한경우(serviceID가 **로 등록된경우)
+	public static HashMap<String,String> apiUriLikeMap = new HashMap<String, String>();
+	
+	public static HashMap<String,String> saveRouteList2Map() {	
+		List<Route> routeList  = ManualRefresh.getRouteList(); // zuul routeMap에 등록된 목록을 받아옴
+		
+		HashMap<String,String> equalMap = new HashMap<String, String>();
+		HashMap<String,String> likeMap = new HashMap<String, String>();		
+				
+		for(Route route : routeList) {
+			String path = route.getFullPath(); // /api/**
+			String uri = null;
+			String serviceId = null;
+			
+			//ex) /api/** -> /api/, /api/airCargo** -> /api/
+			if(path.endsWith("**")) {
+				uri = path.substring(0, path.lastIndexOf("/") + 1); // prefix 추출시 마지막/ 앞까지 추출
+			}else {
+				uri = path;
+			}			
+			
+			//URL(redirect설정)이 입력된경우 ID사용(어드민에서 등록시 URL입력시 ID와 동일하게 제약사항 둠)
+			if(route.getLocation()!=null && route.getLocation().toUpperCase().startsWith("HTTP")) {
+				serviceId = route.getId() + ".do";
+			}else {
+				serviceId = route.getLocation();
+			}			
+			
+			//serviceID를 ex) airCargo**로 입력하는경우-> URI가 airCargo로 들어오면 airCargo를 API-ID로 사용함
+			if(serviceId!=null && serviceId.endsWith("**")) {
+				//serviceId가 **로 끝나는경우 api-id와 **를 제외한 serviceID가 같도록 어드민에서 제한함
+				likeMap.put(uri + serviceId, route.getId()); 
+			}else {
+				//API-URI:API-ID => API-URI로 유효성검증, API-ID로 라우팅인증정보 확인
+				equalMap.put(uri + serviceId, route.getId());
+			}
+			
+			
+			apiUriEqualMap.clear(); //재로딩시 초기화 추가
+			apiUriEqualMap = (HashMap<String, String>) equalMap.clone(); 
+			apiUriLikeMap.clear();
+			apiUriLikeMap = (HashMap<String, String>) likeMap.clone();
+			 
+			LOGGER.debug("[DynamicRouteLocatior] route:" + route.toString());
+		}
+		
+		LOGGER.debug("[DynamicRouteLocatior] saveRouteList2Map!");
+		
+		return apiUriEqualMap;
+	}
+}
+```
