@@ -38,7 +38,7 @@
   #### 2-3. [Zuul-JDBC](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_%EA%B5%AC%ED%98%841_BackEnd1_Zuul-JDBC.md)  
   #### 2-4. [Zuul-Ribbon](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_%EA%B5%AC%ED%98%841_Backend2_Zuul-Ribbon.md)
   #### 2-5. [Zuul-Cookie-UUID](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_%EA%B5%AC%ED%98%841_Backend3_Zuul-Cookie.md)  
-
+  #### 2-6. [Zuul-Hystrix](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_%EA%B5%AC%ED%98%841_Backend4_Zuul_Hystrix.md)  
   
   
 
