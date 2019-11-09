@@ -76,75 +76,63 @@ public class CustomFallbackProvider implements FallbackProvider {
 		}
 	}
 	
-	 private String getInvalidParam(final Throwable cause) {
-		 LOGGER.debug("[CustomFallbackProvider] getInvalidParam hystrixThreadTimeoutMilliseconds:"+hystrixThreadTimeoutMilliseconds);
-	     if (cause instanceof HystrixTimeoutException) {
-	         return "hystrix....timeoutInMilliseconds: " + hystrixThreadTimeoutMilliseconds;
-	     } else {
-	         RequestContext context = RequestContext.getCurrentContext();
-	         String serviceId = context.get(SERVICE_ID).toString().toUpperCase();
-	         String requestURI = context.get(REQUEST_URI).toString();
-	         return serviceId + requestURI;
-	     }
-	 }
-
-	 private String getRootCauseMsg(final Throwable cause) {
-		 return ExceptionUtils.getRootCauseMessage(cause);
-	 }
-	 
-	 public ClientHttpResponse fallbackResponse(String route, Throwable cause) {
-		 if (cause instanceof HystrixTimeoutException) {
-	         return response(HttpStatus.GATEWAY_TIMEOUT, getInvalidParam(cause), getRootCauseMsg(cause));
-	     } else {
-	         return response(HttpStatus.INTERNAL_SERVER_ERROR, getInvalidParam(cause), getRootCauseMsg(cause));
-	     }
-	 }
-	 
-	 private ClientHttpResponse response(final HttpStatus status, String invalidParam, String rootCauseMsg ) {
-	        return new ClientHttpResponse() {
-	            @Override
-	            public HttpStatus getStatusCode() throws IOException { return status; }
-	            @Override
-	            public int getRawStatusCode() throws IOException { return status.value(); }
-	            @Override
-	            public String getStatusText() throws IOException { return status.getReasonPhrase(); }
-	            @Override
-	            public void close() {      }
-
-	            @Override
-	            public InputStream getBody() throws IOException {
-	                LOGGER.debug("[CustomFallbackProvider] response:"+status+","+invalidParam+","+rootCauseMsg);
-	            	
-	            	HttpStatus status = getStatusCode();
-	                ErrorResponseBodyVO responseBodyVO;
-	                if (status == HttpStatus.GATEWAY_TIMEOUT) {
-	                    responseBodyVO = new ErrorResponseBodyVO("Error"
-	                                            , "Failed to handle the request in given thread time. (" + rootCauseMsg + ")"
-	                                            , invalidParam);
-	                } else if (status == HttpStatus.INTERNAL_SERVER_ERROR) {
-	                    responseBodyVO = new ErrorResponseBodyVO("Error"
-	                                            , "Service Unavailable. Please try after sometime. (" + rootCauseMsg + ")"
-	                                            , invalidParam);
-	                } else {
-	                    responseBodyVO = new ErrorResponseBodyVO();
-	                }
-	                return new ByteArrayInputStream(responseBodyVO.toJSONString().getBytes());
-	            }
-
-	            @Override
-	            public HttpHeaders getHeaders() {
-	                HttpHeaders headers = new HttpHeaders();
-	                headers.setContentType(MediaType.APPLICATION_JSON);
-	                return headers;
-	            }
-	        };
-	    }
-
 		@Override
 		public ClientHttpResponse fallbackResponse() {
 			return null;
 		}
 }
+
+public class CustomClientHttpResponse implements ClientHttpResponse{
+	private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(CustomFallbackProvider.class);
+	
+	private HttpStatus status;
+	private String errType;
+	private String errMsg;
+	public CustomClientHttpResponse(HttpStatus status) {
+		this.status = status;
+	}
+	public CustomClientHttpResponse(String errType, String errMsg) {
+		this.errType = errType;
+		this.errMsg = errMsg;
+	}
+	
+	@Override
+    public HttpStatus getStatusCode() throws IOException { return status; }
+	@Override
+	public int getRawStatusCode() throws IOException { return status.value(); }
+	@Override
+	public String getStatusText() throws IOException { return status.getReasonPhrase(); }
+	@Override
+	public void close() {      }
+
+	@Override
+    public InputStream getBody() throws IOException {
+		HttpStatus status = getStatusCode();
+		JSONObject resData = new JSONObject();        	
+		
+		if(status!=null) {
+			LOGGER.info("[CustomFallbackProvider] status:" + getStatusCode()+",reason:"+getStatusText());
+    		
+			resData.put("ResultTypeCode", String.valueOf(status));
+			resData.put("ErrorDescription", getStatusText());
+		}else {
+			LOGGER.info("[CustomFallbackProvider] errType:" + errType+",errMsg:"+errMsg);
+			
+			resData.put("ResultTypeCode", errType);
+			resData.put("ErrorDescription", errMsg);
+		}
+		
+        return new ByteArrayInputStream(resData.toJSONString().getBytes());
+    }
+
+	@Override
+    public HttpHeaders getHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return headers;
+    }
+}
+
 
 public class CoeZuulApplication {
 
