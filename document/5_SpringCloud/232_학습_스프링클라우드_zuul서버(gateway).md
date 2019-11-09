@@ -152,7 +152,7 @@ routes: #=> zuul-jdbc로 db테이블에 정의함
 
 4. 설정방법
 4-1. sendsitiveHeader : 미설정 > 전체 통과시킴
-4-2. sendsitiveHeader : 'ULH-Api-Id'
+4-2. sendsitiveHeader : 'Api-Id'
 - client가 보내는 헤더정보에서 해당정보가 downstream으로 전달되지 않는다.(제거)
 
 5.확인된 오류
