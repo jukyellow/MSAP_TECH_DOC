@@ -169,3 +169,11 @@ proxy_read_timeout 300;
 proxy_redirect off;  
 ```
 
+#### NginX error_log 파일 추가  
+- default.conf 파일에 error_log path 추가  
+- 참고 : https://medium.com/sjk5766/docker-compose%EB%A1%9C-localhost-nginx-%EB%A6%AC%EB%B2%84%EC%8A%A4-%ED%94%84%EB%A1%9D%EC%8B%9C-%EA%B5%AC%EC%84%B1-8214d41a94fc  
+
+
+
+
+
