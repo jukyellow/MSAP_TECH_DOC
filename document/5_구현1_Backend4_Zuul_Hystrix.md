@@ -147,4 +147,12 @@ public class CoeZuulApplication {
 }
 ```
 
+### 4. Hystrix 시간 설정문제  
+- ex) Zuul .out파일 warning 메세지
+> the hystrix timeout of 2000ms for the command airCargoTrace.do is set lower than the combination is the ribbon read timeout and connect timeout.  
+
+- 현상분석: Ribbon timeout설정보다 Hystrix timeout이 작게 설정되있음(Hystrix가 크게 잡혀있어야, Ribbon설정이 정상대로 동작함)  
+-관련 해석자료: https://stackoverflow.com/questions/50622668/hystrix-ribbon-timeout-warnings  
+![image](https://user-images.githubusercontent.com/45334819/68985108-723d0500-0857-11ea-988b-96176a89b114.png)  
+
 
