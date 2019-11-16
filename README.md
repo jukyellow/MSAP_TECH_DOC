@@ -1,4 +1,4 @@
-# MSAP (Micro Service API Platform) 개인 Project
+# MSAP (Micro Service API Platform) 개인 Project + 사내POC
 
 > MSAP(Micro Serice API Platform) 프로젝트 개발에 사용된 주요기술요소 설명을 위한 레파지토리 입니다.  
 > 요소기술에 대한 전반적인 이해보다, MSAP 개발에 사용된 기능위주의 설명으로 채워질 예정입니다.  
@@ -39,6 +39,7 @@
   #### 2-4. [Zuul-Ribbon](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_%EA%B5%AC%ED%98%841_Backend2_Zuul-Ribbon.md)
   #### 2-5. [Zuul-Cookie-UUID](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_%EA%B5%AC%ED%98%841_Backend3_Zuul-Cookie.md)  
   #### 2-6. [Zuul-Hystrix](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_%EA%B5%AC%ED%98%841_Backend4_Zuul_Hystrix.md)  
+  #### 2-7. [Nignx-WebServer](https://github.com/jukyellow/msa-side-proj/blob/master/document/2_%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD5_Ngnix.md)  
   
   
 
