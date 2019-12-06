@@ -1,7 +1,7 @@
 
 # Zipkin,Sleuth 연계를 통한 Request별 추적기능 강화
 
-0. Zuul Gateway 연동: Zuul에서 생성한 uuid를 Slueth Span의 TraceId로 지정하여 시스템연계  
+### 0. Zuul Gateway 연동: Zuul에서 생성한 uuid를 Slueth Span의 TraceId로 지정하여 시스템연계  
 
 - 참고:  https://brunch.co.kr/@springboot/58
 
