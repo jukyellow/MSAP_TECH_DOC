@@ -41,6 +41,7 @@
   #### 2-6. [Zuul-Hystrix](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_%EA%B5%AC%ED%98%841_Backend4_Zuul_Hystrix.md)  
   #### 2-7. [Nignx-WebServer](https://github.com/jukyellow/msa-side-proj/blob/master/document/2_%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD5_Ngnix.md)  
   #### 2-8. [Zipkin,Sleuth](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_%EA%B5%AC%ED%98%841_Backend5_Zipkin,Sleuth.md)
+  #### 2-9. [Nginx](https://github.com/jukyellow/msa-side-proj/blob/master/document/2_%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD5_Ngnix.md)  
   
   
 
