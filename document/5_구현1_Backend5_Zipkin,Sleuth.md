@@ -27,8 +27,8 @@
   implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
   implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
 ```
-> 클라이언트 서버 설정
-![image](https://user-images.githubusercontent.com/45334819/70535824-0f623380-1ba1-11ea-8e4e-a21f0a8fbfa4.png)
+> 클라이언트 서버 설정  
+![image](https://user-images.githubusercontent.com/45334819/70535824-0f623380-1ba1-11ea-8e4e-a21f0a8fbfa4.png)  
 
 
 #### 4-3)킵킨서버 설정
