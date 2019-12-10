@@ -23,14 +23,16 @@
 user nginx	  #default www-data, 워커 프로세스(웹서버역할)의 권한 지정  
 worker_processes  1;  #워커 프로세스의 수, 코어 갯수만큼 설정하면 됨  
 events { 		 #비동기 이벤트 처리옵션  
-    worker_connections  1024;	         #한번에 처리할수 있는 커넥션 수   
+    worker_connections  1024;	         #한번에 처리할수 있는 커넥션 수 (동시접속 설정)  
     #multi_accept on; (디폴트값 : off) #  
 }  
 http{	  #server,location 블록을 묶음, 선언된 설정을 하위 블록이 상속받음  
      server{	  #가상호스트(웹app서비스를 제공하는 하나의 도메인)  
           listen 80;                              #리슨 포트  
           server_name exam.com;          #도메인명  
-          access_log /var/log/nginx/exam.com.log;  #접속로그  
+          access_log /var/log/nginx/exam.com.log main;  #접속로그  
+          error_log /var/log/nginx/host.error.log; #error 로그 추가
+
           location / {	#특정 URL을 처리하는 방법( / : root요청인 경우)  
             root   html;         	           #정적파일 경로설정(URI를 제외한 서버경로)  
             index  index.html index.htm;   #기본 로딩페이지 찾는 순서?  
@@ -50,11 +52,13 @@ http{	  #server,location 블록을 묶음, 선언된 설정을 하위 블록이 
      }  
     #웹서버->WAS서버로 호출시 설정정보 세팅  
     #'server'가 멀티가 존재하면 라운드로빈 방식으로 호출   
-    upstream was_server{     
+    upstream was_server{ 
+        least_conn; #client 접속자가 작은곳으로 라우팅
         ip_hash;	#sticky session 설정(client접속이 하나의 WAS로만 호출하여 처리, 로그인세션유지등을 위해) 
         server 192.168.125.142:9000 weight=3; #weight설정: 다른서버보다 3배많이 호출  
         server 192.168.125.143:9000;  
         server 192.168.125.144:9000 max_fails=5 fail_timeout=30s; #30초간 응답이 없고 5번반복시 호출중지  
+        server ip:port slow_start=30s; #서버 부하를 줄이기 위해 시작후 30초뒤 라우팅 적용(상용 nginx plus)
         server unix:/var/run/php5-fpm.sock backup;  평상시엔 사용안하다가, 모든서버가 불능일때 사용  
     }  
 }  
