@@ -1,5 +1,7 @@
 # Feign 
 
+* A서비스에서 -> B서비스를 호출한다고 할때, 마이크로 서비스간에 Feign 모듈을 이용해 연동할수 있다.  
+
 - 참고: https://comnic.tistory.com/23
 
 1)A,B 각각 서비스가 존재한다고 가정하고, B서비스의 Rest URI 부분
