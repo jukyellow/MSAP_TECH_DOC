@@ -317,7 +317,7 @@ public class ServiceHealthCheckHanlder implements HealthCheckHandler{
 }
 ```
 
-#### Zuul Health Check → Nginx 호출
+#### Zuul Health Check → Nginx 연동
 - zuul health 체크용 controller
 ```
 @Controller
@@ -344,7 +344,8 @@ public class NginxHealthCheker {
   }
 }
 ```
-- nginx health_check 적용코드
+- nginx health_check 설정
+> https://github.com/yaoweibin/nginx_upstream_check_module 패치(heakth_check)적용
 ```
 upstream zuul_server{
   least_conn;
