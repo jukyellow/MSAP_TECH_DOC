@@ -71,7 +71,7 @@ public class GracefulShutdown implements TomcatConnectorCustomizer, ApplicationL
     LOGGER.info("[GracefulShutdown] onApplicationEvent start! ");
     //0. health Checker에서 사용할 변수 업데이트 -> eureka 서버로 renew할때 서비스 상태가 반영되도록 함
     RunningStatus.serverStatus = InstanceStatus.DOWN;
-    //(2019.12.17,juk) EUREKA REST API(PUT=DOWN)를 사용해도 일정시간동안 트래픽 차단 및 정상동작이 안되 skip함
+    //EUREKA REST API(PUT=DOWN)를 사용해도 일정시간동안 트래픽 차단 및 정상동작이 안되 skip함
     //1. Eureka 서버에 down명령어를 날림
     eurekaConn.deleteServiceDeregist();
     //2. 10초 대기(설정값에 따라다름, 유레카서버 재반영 주기등 고려)
@@ -150,7 +150,7 @@ public class EurekaConnector {
     + serviceName.toUpperCase() + "/"
     + hostName + "2" + ":" + serviceName + ":" + servicePort + "/";
   }
-  //ex: http://210.102.77.219:8002/eureka/apps/AIRCARGOTRACE.DO/msa-poc:airCargoTrace.do:8101/status?value=DOWN
+  //ex: http://ip:port/eureka/apps/AIRCARGOTRACE.DO/msa-poc:airCargoTrace.do:8101/status?value=DOWN
   //모든 유레카 서버에게 상태 변경요청
   public void putServiceStatus(String status) {
     String uri_param_status = null;
@@ -272,9 +272,7 @@ public class ServerStartPostJob extends Thread {
     JSONObject reqJson = new JSONObject();
     JSONArray resultList = new JSONArray();
     JSONObject responseJson = new JSONObject();
-    responseJson.put("StatusDiv", "H");
-    responseJson.put("MawbNo", "12345678901");
-    responseJson.put("HawbNo", "TEST1234");
+    responseJson.put("data1", "value1");
     resultList.add(responseJson);
     reqJson.put("RequestList", resultList);
     String reqBody = reqJson.toJSONString();
