@@ -3,8 +3,8 @@
 * Gradle
 ![image](https://user-images.githubusercontent.com/45334819/61801594-04b13700-ae6a-11e9-9f95-a25bbba5a280.png)  
 
-* properties(config서버-yml)
-![image](https://user-images.githubusercontent.com/45334819/71927625-39773780-31d9-11ea-9ee9-60bad8c9dcd5.png)
+* properties(config서버-yml)  
+![image](https://user-images.githubusercontent.com/45334819/71927625-39773780-31d9-11ea-9ee9-60bad8c9dcd5.png)  
 
 * java interface
 ``` java
@@ -23,8 +23,7 @@ public interface Db1Mapper {
 }
 ```
 
-* Bean
-- 참고 : https://jdm.kr/blog/230
+* Bean (참고 : https://jdm.kr/blog/230)  
 ``` java 
 //zuul-jdbc를 Primary로 선언함(로직에서는 사용안하고 zuul-jdbc로만 전달함)
 @Configuration
