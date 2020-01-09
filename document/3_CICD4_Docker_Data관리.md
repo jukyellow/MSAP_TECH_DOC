@@ -41,6 +41,16 @@ docker run --name air-cargo-trace-test --net=host -d -p 8909:8909 -v msap-zuul-s
 ```
 - dangling 볼륨 삭제: docker volume rm $(docker volume ls -qf dangling=true)
 
+##### 3) 컨테이너간 볼륨 경로 공유
+- 참고:  https://jungwoon.github.io/docker/2019/01/13/Docker-3/  
+```
+컨테이너 생성시 --volumes-from 옵션을 사용하면 -v 옵션이 적용된 컨테이너의 볼륨 디렉토리를 공유할 수 있습니다.
+$ docker run -i -t \
+> --name volumes_from_container \ # --name : 컨테이너 이름
+> --volumes-from wordpressdb_hostvolume \ # --volumes-from [컨테이너 이름] : -v가 설정된 컨테이너의 볼륨을 같이 공유
+> wordpress # 이미지 이름
+```
+
 <br>
 
 ## [ 3.docker 컨테이너 TimeZone(현재시간) 설정 ]
