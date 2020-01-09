@@ -43,6 +43,7 @@ docker run --name air-cargo-trace-test --net=host -d -p 8909:8909 -v msap-zuul-s
 
 ##### 3) 컨테이너간 볼륨 경로 공유
 - 참고:  https://jungwoon.github.io/docker/2019/01/13/Docker-3/  
+- 주의사항: 기존 컨테이너의 볼륨을 공유함으로 컨테이너가 떠있어야 실행가능(기존 컨테이너가 죽으면 실행불가)  
 ```
 컨테이너 생성시 --volumes-from 옵션을 사용하면 -v 옵션이 적용된 컨테이너의 볼륨 디렉토리를 공유할 수 있습니다.
 $ docker run -i -t \
