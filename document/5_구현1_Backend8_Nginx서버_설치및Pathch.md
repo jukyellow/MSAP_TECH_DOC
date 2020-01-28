@@ -100,45 +100,26 @@ server {
 }
 
 3. 로그 Rotate 설정
-- 14일 유지, 압축보관 : 단점 압축시 날짜정보 없음
-/var/log/nginx/*.log {
-        daily
-        missingok
-        rotate 14
-        compress
-        delaycompress
-        notifempty
-        create 0640 www-data adm
-        sharedscripts
-        prerotate
-                if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
-                        run-parts /etc/logrotate.d/httpd-prerotate; \
-                fi \
-        endscript
-        postrotate
-                invoke-rc.d nginx rotate >/dev/null 2>&1
-        endscript
+- 30일 보관 및 날짜 백업(``따옴표 주의!)
+```
+/usr/local/nginx/logs/*.log {
+    daily
+    dateext
+    dateyesterday
+    missingok
+    compress
+    delaycompress
+    rotate 30
+    notifempty
+    create 0640 msapoc root
+    sharedscripts
+    postrotate
+          [ ! -f /usr/local/nginx/logs/nginx.pid ] || kill -USR1 `cat /usr/local/nginx/logs/nginx.pid`
+    endscript
 }
+```
+> Nginx는 새 로그파일을 생성할때, kill signal USR1을 받아서 처리함  
 
-- 30일 보관 및 날짜 백업
-/var/log/nginx/*/*.log {
-        daily
-        dateext
-        dateyesterday
-        missingok
-        rotate 30
-        notifempty
-        create 0640 www-data adm
-        sharedscripts
-        prerotate
-                if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
-                        run-parts /etc/logrotate.d/httpd-prerotate; \
-                fi \
-        endscript
-        postrotate
-                invoke-rc.d nginx rotate >/dev/null 2>&1
-        endscript
-}
 
 4. 크론탭 설정
 > 00시 00분 정각에 동작시키기
