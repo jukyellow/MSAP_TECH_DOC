@@ -1,12 +1,12 @@
 # Spring Boot DB연동 (Mybatis,Transaction,DB Pool)
 
-* Gradle
+### 1. Gradle
 ![image](https://user-images.githubusercontent.com/45334819/61801594-04b13700-ae6a-11e9-9f95-a25bbba5a280.png)  
 
-* properties(config서버-yml)  
+### 2. properties(config서버-yml)  
 ![image](https://user-images.githubusercontent.com/45334819/71927625-39773780-31d9-11ea-9ee9-60bad8c9dcd5.png)  
 
-* java interface
+### 3. java interface
 ``` java
 import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.annotation.MapperScan;
@@ -23,7 +23,7 @@ public interface Db1Mapper {
 }
 ```
 
-* Bean (참고 : https://jdm.kr/blog/230)  
+### 4. Bean (참고 : https://jdm.kr/blog/230)  
 ``` java 
 //zuul-jdbc를 Primary로 선언함(로직에서는 사용안하고 zuul-jdbc로만 전달함)
 @Configuration
@@ -74,7 +74,7 @@ public class Db1DataSourceConfig {
     }
 }
 ```
-* mapper xml쿼리문
+### 5. mapper xml쿼리문
 ```
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -85,18 +85,18 @@ public class Db1DataSourceConfig {
         </select>
 ```
 
-* @Transactional
+### 6. @Transactional
 ![image](https://user-images.githubusercontent.com/45334819/61801729-3c1fe380-ae6a-11e9-844e-8acd8392eadc.png)
 
 * 참고:  https://uwostudy.tistory.com/19
 ![image](https://user-images.githubusercontent.com/45334819/56146162-b4ac1400-5fe0-11e9-802a-f6c62367c414.png)
 ![image](https://user-images.githubusercontent.com/45334819/56146212-d0171f00-5fe0-11e9-9260-08e551cac90d.png)
 
-*  XML예)
+### 7. XML
 ![image](https://user-images.githubusercontent.com/45334819/61801748-4a6dff80-ae6a-11e9-9820-f3cb70422df0.png)  
 <br>
 
-* DB reconnection 설정(yml파일)  
+### 8. DB reconnection 설정(yml파일)  
 ```
 #Zuul-Jdbc(maspoc)
 spring:
@@ -104,8 +104,8 @@ spring:
     datasource:
       driverClassName : oracle.jdbc.driver.OracleDriver
       url : jdbc:oracle:thin:@***.***.***.****:1521:chee***
-      username : msapoc #nlps
-      password : msapoc_123 #nlps2012
+      username : aaa
+      password : aaa
       maxActive : 20
       maxIdle : 20
       minIdle : 10
