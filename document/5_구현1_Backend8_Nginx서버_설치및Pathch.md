@@ -101,6 +101,7 @@ server {
 
 3. 로그 Rotate 설정
 - 30일 보관 및 날짜 백업(``따옴표 주의!)
+# /etc/logrotate.d/nignx 
 /usr/local/nginx/logs/*.log {
     daily
     dateext
