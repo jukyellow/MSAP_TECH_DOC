@@ -101,7 +101,6 @@ server {
 
 3. 로그 Rotate 설정
 - 30일 보관 및 날짜 백업(``따옴표 주의!)
-```
 /usr/local/nginx/logs/*.log {
     daily
     dateext
@@ -117,7 +116,6 @@ server {
           [ ! -f /usr/local/nginx/logs/nginx.pid ] || kill -USR1 `cat /usr/local/nginx/logs/nginx.pid`
     endscript
 }
-```
 > Nginx는 새 로그파일을 생성할때, kill signal USR1을 받아서 처리함  
 
 
