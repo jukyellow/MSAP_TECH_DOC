@@ -1,4 +1,4 @@
-# MSAP (Micro Service API Platform) 개인 Project + 사내POC
+# MSAP (Micro Service API Platform) 개인Project + 사내POC(요소기술)
 
 > MSAP(Micro Serice API Platform) 프로젝트 개발에 사용된 주요기술요소 설명을 위한 레파지토리 입니다.  
 > 요소기술에 대한 전반적인 이해보다, MSAP 개발에 사용된 기능위주의 설명으로 채워질 예정입니다.  
@@ -19,6 +19,9 @@
   
 (Eureka)  
 ![image](https://user-images.githubusercontent.com/45334819/54955752-8a42da00-4f91-11e9-8d20-554f359bd8b9.png)  
+
+(사용자화면)
+![image](https://user-images.githubusercontent.com/45334819/54955810-b5c5c480-4f91-11e9-8e47-4385968d53e1.png)
 
 <hr>
   
