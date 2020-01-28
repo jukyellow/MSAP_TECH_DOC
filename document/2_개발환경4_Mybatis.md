@@ -103,7 +103,7 @@ spring:
   db1:
     datasource:
       driverClassName : oracle.jdbc.driver.OracleDriver
-      url : jdbc:oracle:thin:@210.102.77.61:1521:cheetah
+      url : jdbc:oracle:thin:@***.***.***.****:1521:chee***
       username : msapoc #nlps
       password : msapoc_123 #nlps2012
       maxActive : 20
