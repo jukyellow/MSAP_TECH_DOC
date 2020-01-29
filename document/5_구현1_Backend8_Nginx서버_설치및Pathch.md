@@ -101,7 +101,7 @@ server {
 
 3. 로그 Rotate 설정
 - 30일 보관 및 날짜 백업(``따옴표 주의!)
-# /etc/logrotate.d/nignx 
+# /etc/logrotate.d/nignx (Ubuntu 16.0.4, nginx patch 16.1)  
 /usr/local/nginx/logs/*.log {
     daily
     dateext
@@ -114,7 +114,9 @@ server {
     create 0640 msapoc root
     sharedscripts
     postrotate
-          [ ! -f /usr/local/nginx/logs/nginx.pid ] || kill -USR1 `cat /usr/local/nginx/logs/nginx.pid`
+        if [ -f /usr/local/nginx/logs/nginx.pid ]; then
+            kill -USR1 `cat /usr/local/nginx/logs/nginx.pid`
+        fi
     endscript
 }
 > Nginx는 새 로그파일을 생성할때, kill signal USR1을 받아서 처리함  
