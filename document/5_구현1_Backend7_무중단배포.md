@@ -14,104 +14,135 @@
 ### 샘플코드
 
 #### 서비스 down시
-- 서버 entry point
-```
-//shutdown 이벤트 등록
-@SpringBootApplication
-.. {
-  @Bean
-  public ServletContainerEventHandler servletContainerEventHandler() {
-    return new ServletContainerEventHandler(new GracefulShutdown());
-  }
-}
-```
-- JVM 다운시 Event Handler 등록
-```
-public class ServletContainerEventHandler implements EmbeddedServletContainerCustomizer {
-  private static final Logger LOGGER = LoggerFactory.getLogger(ServletContainerEventHandler.class);
-  private GracefulShutdown gracefulShutdown;
-  public ServletContainerEventHandler(GracefulShutdown gracefulShutdown) {
-    this.gracefulShutdown = gracefulShutdown;
-  }
-
-  @Override
-  public void customize(ConfigurableEmbeddedServletContainer container) {
-    LOGGER.info("[ServletContainerEventHandler] regist ConfigurableEmbeddedServletContainer");
-    if (container instanceof TomcatEmbeddedServletContainerFactory) {
-      ((TomcatEmbeddedServletContainerFactory) container)
-      .addConnectorCustomizers(gracefulShutdown);
-    }
-  }
-}
-```
-
 - Shutdown시 톰캣 Request를 처리할때까지 대기후 종료
+- endpoint보안으로 management.security.enabled=true(/env등 actuator 기본 제공api 조회막음)로 설정함에 따라, actuator /shutdown 메소드도 사용불가
+- /shutdown 메소드를 직접구현하고 기존, gracefulShutdown클래스등을 폐기하고 하나로 리팩토링함
 ```
-//참고: https://blog.marcosbarbero.com/graceful-shutdown-spring-boot-apps/
-@Component
+//참고: https://github.com/spring-projects/spring-boot/issues/4657
+@RestController
 @RefreshScope
-public class GracefulShutdown implements TomcatConnectorCustomizer, ApplicationListener<ContextClosedEvent> {
-  private static final Logger LOGGER = LoggerFactory.getLogger(GracefulShutdown.class);
-  private static final int TIMEOUT = 10;
-  private volatile Connector connector;
-  @Autowired
-  private EurekaConnector eurekaConn;
-  //lease-renewal-interval-in-seconds 값으로 대체 요망
-  @Value("${deploy.shutdown.time}")
-  private int shutdownTime=10; //default 10->config 15초이상 설정
+public class ShutdownController
+        implements ApplicationContextAware,                 //applicationContext close
+                   EmbeddedServletContainerCustomizer,      //tomcat servlet connector? 등록
+                   TomcatConnectorCustomizer,               //tomcat connector 획득(pause 목적)
+                   ApplicationListener<ContextClosedEvent>  //kill 시그널등 context close 리스닝
+                   
+{        
+    private static final Logger LOGGER = LoggerFactory.getLogger(ShutdownController.class);
+    
+    private ConfigurableApplicationContext appContext;
+    private volatile Connector connector;
+    @Autowired
+    private EurekaConnector eurekaConn;
+    
+    @Value("${deploy.shutdown.time}") //lease-renewal-interval-in-seconds 값으로 대체 요망?
+    private int shutdownTime=10;      //default 10->config 15초이상 설정
+    private static final int AWIAT_TERMINATION_TIMEOUT = 10;
 
-  @Override
-  public void customize(Connector connector) {
-  `this.connector = connector;
-  }
-
-  //kill pid로 동작함
-  @Override
-  public void onApplicationEvent(ContextClosedEvent event) {
-    LOGGER.info("[GracefulShutdown] onApplicationEvent start! ");
-    //0. health Checker에서 사용할 변수 업데이트 -> eureka 서버로 renew할때 서비스 상태가 반영되도록 함
-    RunningStatus.serverStatus = InstanceStatus.DOWN;
-    //EUREKA REST API(PUT=DOWN)를 사용해도 일정시간동안 트래픽 차단 및 정상동작이 안되 skip함
-    //1. Eureka 서버에 down명령어를 날림
-    eurekaConn.deleteServiceDeregist();
-    //2. 10초 대기(설정값에 따라다름, 유레카서버 재반영 주기등 고려)
-    //lease-renewal-interval-in-seconds + 5초 정도 더 대기시간 필요
-    try {
-      for(int i=0; i<shutdownTime; ++i) {
-        Thread.sleep(1000);
-        LOGGER.info("[GracefulShutdown] shutdown ready...");
-      }
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-    //3. 톰캣 Request 쓰레드 종료시까지 대기 및 프로세스 종료
-    LOGGER.info("[GracefulShutdown] onApplicationEvent > do stop! ");
-    stopProcess();
-  }
-  public void stopProcess() {
-    this.connector.pause();
-    Executor executor = this.connector.getProtocolHandler().getExecutor();
-    if (executor instanceof ThreadPoolExecutor) {
-      try {
-        ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) executor;
-        threadPoolExecutor.shutdown();
-        if (!threadPoolExecutor.awaitTermination(TIMEOUT, TimeUnit.SECONDS)) {
-          LOGGER.warn("Tomcat thread pool did not shut down gracefully within "
-          + TIMEOUT + " seconds. Proceeding with forceful shutdown");
-
-          threadPoolExecutor.shutdownNow();
-
-        if (!threadPoolExecutor.awaitTermination(TIMEOUT, TimeUnit.SECONDS)) {
-          LOGGER.error("Tomcat thread pool did not terminate");
+    //{management.security.enabled:true}로 설정후 shutdown메소드(acutator) 동작불가로 직접 구현함
+    //참고: spring boot actuator(org.springframework.boot.actuate.context.ShutdownEndpoint class
+      @PostMapping("/shutdown")
+    public Map<String,String> shutdownMethod() {
+          LOGGER.info("[ShutdownController] shutdownHandler(/stop) start ");
+          
+          if(appContext== null) {
+              return Collections.unmodifiableMap(Collections.singletonMap("message", "No context to shutdown"));
           }
-        }
-      } catch (InterruptedException ex) {
-        ex.printStackTrace();
-        LOGGER.error("stopProcess err:" + ex.getMessage());
-        Thread.currentThread().interrupt();
-      }
+          try{
+              return Collections.unmodifiableMap(Collections.singletonMap("message", "Shutting down(by /stop), bye..."));
+          }finally {
+              //:: > double colon(java 8에서 추가됨), 사용법예) class명::메소드명으로 호출
+              //todo. Thread는 Runnable 객체를 매계변수로 받는데 double colon을 쓰면 단순 메소드도 매핑이 됨(내부 처리가 있는듯..)
+              Thread thread = new Thread(this::performShutdown);
+              thread.setContextClassLoader(getClass().getClassLoader());
+              thread.start();
+          }
+      }      
+      private void performShutdown() {
+          try {
+              Thread.sleep(500L);
+          }catch(InterruptedException ex) {
+              Thread.currentThread().interrupt();
+          }
+        appContext.close();
     }
-  }
+
+    //applicationContext close
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        LOGGER.info("[ShutdownController] get applicationContext");
+        this.appContext = (ConfigurableApplicationContext)applicationContext;
+    }
+    
+    //tomcat servlet connector? 등록
+    @Override
+    public void customize(ConfigurableEmbeddedServletContainer container) {
+        LOGGER.info("[ShutdownController] regist ConfigurableEmbeddedServletContainer");
+        
+        if (container instanceof TomcatEmbeddedServletContainerFactory) {
+            ((TomcatEmbeddedServletContainerFactory) container).addConnectorCustomizers(); //this class
+        }
+    }
+    
+    //tomcat connector 획득
+    @Override
+    public void customize(Connector connector) {
+        LOGGER.info("[ShutdownController] get TomcatConnector");
+        this.connector = connector;        
+    }
+
+    //kill 시그널등 context close시 호출
+    @Override
+    public void onApplicationEvent(ContextClosedEvent event) {
+        LOGGER.info("[ShutdownController] onApplicationEvent start! ");
+        
+        //0. health Checker에서 사용할 변수 업데이트 -> eureka 서버로 renew할때 서비스 상태가 반영되도록 함
+        RunningStatus.serverStatus = InstanceStatus.DOWN;
+        
+        //EUREKA REST API(PUT=DOWN)를 사용해도 일정시간동안 트래픽 차단 및 정상동작이 안되 skip함
+        //1. Eureka 서버에 down명령어를 날림
+        eurekaConn.deleteServiceDeregist();
+        
+        //2. 10초 대기(설정값에 따라다름, 유레카서버 재반영 주기등 고려)
+          //lease-renewal-interval-in-seconds + 5초 정도 더 대기시간 필요
+        try {
+            for(int i=0; i<shutdownTime; ++i) {
+                Thread.sleep(1000);
+                LOGGER.info("[ShutdownController] shutdown ready...");
+            }
+          } catch (InterruptedException e) {
+              e.printStackTrace();
+          }
+        
+          //3. 톰캣 Request 쓰레드 종료시까지 대기 및 프로세스 종료
+        LOGGER.info("[ShutdownController] onApplicationEvent > do stop! ");
+        stopProcess();
+    }
+
+    public void stopProcess() {
+        this.connector.pause();
+        Executor executor = this.connector.getProtocolHandler().getExecutor();
+        if (executor instanceof ThreadPoolExecutor) {
+            try {
+                ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) executor;
+                threadPoolExecutor.shutdown();
+                if (!threadPoolExecutor.awaitTermination(AWIAT_TERMINATION_TIMEOUT, TimeUnit.SECONDS)) {
+                    LOGGER.warn("[ShutdownController]Tomcat thread pool did not shut down gracefully within "
+                            + AWIAT_TERMINATION_TIMEOUT + " seconds. Proceeding with forceful shutdown");
+
+                    threadPoolExecutor.shutdownNow();
+
+                    if (!threadPoolExecutor.awaitTermination(AWIAT_TERMINATION_TIMEOUT, TimeUnit.SECONDS)) {
+                        LOGGER.error("[ShutdownController]Tomcat thread pool did not terminate");
+                    }
+                }
+            } catch (InterruptedException ex) {
+                LOGGER.error("[ShutdownController]stopProcess err:" + ex.getMessage());
+                ex.printStackTrace();
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
 }
 ```
 
