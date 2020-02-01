@@ -56,8 +56,8 @@ public class RestController {
     <appender name="DAILY_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_PATH}/daily/${LOG_FILE}.daily.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_PATH}/daily/${LOG_FILE}.daily.%d{yyyyMMdd}.log
-            </fileNamePattern>
+            <!-- 압축 저장시 .gz or .zip으로  -->
+            <fileNamePattern>${LOG_PATH}/daily/${LOG_FILE}.daily.%d{yyyyMMdd}.log.gz</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
@@ -67,8 +67,7 @@ public class RestController {
     <appender name="SQL_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_PATH}/sql/${LOG_FILE}.sql.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_PATH}/sql/${LOG_FILE}.sql.%d{yyyyMMdd}.log
-            </fileNamePattern>
+            <fileNamePattern>${LOG_PATH}/sql/${LOG_FILE}.sql.%d{yyyyMMdd}.log.gz</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
