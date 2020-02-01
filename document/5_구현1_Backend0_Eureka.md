@@ -13,7 +13,8 @@ eureka:
   client:
     serviceUrl:
       #유레카서버는 config서버와 별개로 동작하게 하기위해 dockerfile에서 받아옴
-      defaultZone: http://${eureka1.server.ip}:${eureka1.server.port}/eureka/, http://${eureka2.server.ip}:${eureka2.server.port}/eureka/
+      #이중화된 상대방 서버를 등록함(A->B, B->A), 유레카 서버는 이중화서버 하나씩 등록하고, client는 모든 유레카 서버를 등록함  
+      defaultZone: http://${eureka1.server.ip}:${eureka1.server.port}/eureka/
 #      defaultZone: http://localhost:8002/eureka/
     registerWithEureka: true # 유레카 이중화시 서버 등록여부를 확인하기위해 유레카 자신도 서버목록으로 등록
     fetchRegistry: true      # defaultZone의 유레카 서버에서 클라이언트 정보를 가져온다
