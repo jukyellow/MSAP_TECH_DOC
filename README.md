@@ -46,6 +46,7 @@
   #### 2-7. [Nignx(Web-Server) + LogRotate](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_%EA%B5%AC%ED%98%841_Backend8_Nginx%EC%84%9C%EB%B2%84_%EC%84%A4%EC%B9%98%EB%B0%8FPathch.md)  
   #### 2-8. [Zipkin,Sleuth](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_%EA%B5%AC%ED%98%841_Backend5_Zipkin,Sleuth.md)
   #### 2-9. [무중단 배포](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_%EA%B5%AC%ED%98%841_Backend7_%EB%AC%B4%EC%A4%91%EB%8B%A8%EB%B0%B0%ED%8F%AC.md)
+  #### 2-10. [Docker-Compose배포 및 우선순위에 따른 대기처리](https://github.com/jukyellow/msa-side-proj/blob/master/document/5_%EA%B5%AC%ED%98%841_Backend9_%EB%B0%B0%ED%8F%AC%EB%8C%80%EA%B8%B0shell.md)
   
   
 
