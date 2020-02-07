@@ -1,14 +1,14 @@
 # 서버 배포순서 유지위한 배포대기 쉘 스크립트
 
-1. 파일 구성
-: docker-compose => dockerfile(컨테이너 내부에 소스copy) => wait_for_server.sh(컨테이너 내부에서 대기 실행)
+### 1. 파일 구성
+: docker-compose => dockerfile(컨테이너 내부에 소스copy) => wait_for_server.sh(컨테이너 내부에서 대기 실행)  
 
-2. 동작설명
-2-1. spring boot에 actuator 적용시, default {domain:port/health} rest-api 제공(http 200응답 수신)
-2-2. 먼저 수행되어야할 서버 depends_on설정 및 해당서버 port connect
-2-3. 선행서버 구동뒤 http 200응답을 받으면 대기서버 구동시작
+### 2. 동작설명
+2-1. spring boot에 actuator 적용시, default {domain:port/health} rest-api 제공(http 200응답 수신)  
+2-2. 먼저 수행되어야할 서버 depends_on설정 및 해당서버 port connect ( curl 활용 : command line 용 data transfer tool )  
+2-3. 선행서버 구동뒤 http 200응답을 받으면 대기서버 구동시작  
 
-3. 스크립트
+### 3. 스크립트
 - wait쉘
 ```
 #!/bin/sh
