@@ -80,7 +80,7 @@
 #### 2. [BootStrap](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/document/5_%EA%B5%AC%ED%98%842_UI2_%EB%B6%80%ED%8A%B8%EC%8A%A4%ED%8A%B8%EB%9E%A9.md "BootStrap")
 
 ### 기타  
-#### 1. 엘라스틱 서치 & Kibana
+#### 1. [엘라스틱 서치 & 키바나](https://github.com/jukyellow/msa-side-proj/blob/master/document/6_ElasticSearch/01.Elastic_Kibana_conn.md)
 
 
 <hr />
