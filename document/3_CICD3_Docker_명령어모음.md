@@ -140,6 +140,10 @@
 - docker log driver type 확인
 > docker inspect -f '{{.HostConfig.LogConfig.Type}}' a584bdba7334(도커 컨테이너 ID)
 
+### 23. dangling image 삭제
+'''
+docker rmi -f $(docker images -f "dangling=true" -q)
+'''
 
 <hr />
 
