@@ -1,5 +1,46 @@
 # Docker-compose 설정 및 Wait-for-server.sh 적용  
 
+### docer-compose 명령어 정리
+#### 0. 제약사항
+ : docker-compose.yml파일이 존재하는곳에서 compose 명령어 사용가능  
+
+#### 1.프로세스 목록 확인
+$ docker-compose ps  
+
+#### 2.컨테이너 이미지 생성(build)
+2-1) yml에 선언된 컨테이너 하나만 빌드하는 경우  
+$ docker-compose build {컨테이너명}  
+2-2) 전체 빌드  
+$ docker-compose build  
+ 
+#### 3.컨테이너 종료&삭제(이미지, 볼륨)
+3-1) yml에 선언된 전체 이미지를 삭제함  
+$ docker-compose down --rmi -v  
+•	--rmi: image 삭제  
+•	-v: 볼륨 삭제  
+3-2) yml에 선언된 한개 이미지 삭제  
+$ docker-compose down {컨테이너명}  
+
+#### 4.컨테이너 종료/실행
+•	이미지 삭제없이, 컨테이너를 시작/종료만 수행  
+4-1) yml파일 전체 start/stop  
+$ docker-compose start  
+$ docker-compose stop  
+4-2) yml의 개별 컨테이너 start/stop  
+$ docker-compose start {컨테이너명}  
+$ docker-compose stop {컨테이너명}  
+
+#### 5.컨테이너 네트워크 관리
+5-1) 네트워크 목록확인  
+$ docker  network ls  
+5-2) 네트워크 정보 조회  
+$ docker network inspect {network_id}  
+5-3) 네트워크 삭제  
+$ docker network rm {network_id}  
+  
+<br>
+
+
 ![image](https://user-images.githubusercontent.com/45334819/74351141-0fc5b780-4dfa-11ea-85cf-9907b3d17c5a.png)
 
 ![image](https://user-images.githubusercontent.com/45334819/74351152-148a6b80-4dfa-11ea-830e-c0ee6f2702bf.png)
