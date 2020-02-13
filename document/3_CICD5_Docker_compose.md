@@ -4,18 +4,18 @@
 #### 0. 제약사항
  : docker-compose.yml파일이 존재하는곳에서 compose 명령어 사용가능  
 ```
-$ docker-compose ps # 1.프로세스 목록 확인  
-$ docker-compose build {컨테이너명} #2-1) yml에 선언된 컨테이너 하나만 빌드하는 경우  
-$ docker-compose build             #2-2) 전체 빌드    
-$ docker-compose down --rmi -v   #3-1) yml에 선언된 전체 이미지를 삭제함 (--rmi: image 삭제, -v: 볼륨 삭제 )  
-$ docker-compose down {컨테이너명}  3-2) yml에 선언된 한개 이미지 삭제  
-$ docker-compose start   #4-1) yml파일 전체 start/stop  
+$ docker-compose ps                 # 1.프로세스 목록 확인  
+$ docker-compose build {컨테이너명}  #2-1) yml에 선언된 컨테이너 하나만 빌드하는 경우  
+$ docker-compose build              #2-2) 전체 빌드    
+$ docker-compose down --rmi -v      #3-1) yml에 선언된 전체 이미지를 삭제함 (--rmi: image 삭제, -v: 볼륨 삭제 )  
+$ docker-compose down {컨테이너명}   #3-2) yml에 선언된 한개 이미지 삭제  
+$ docker-compose start              #4-1) yml파일 전체 start/stop  
 $ docker-compose stop  
-$ docker-compose start {컨테이너명}   #4-2) yml의 개별 컨테이너 start/stop  
+$ docker-compose start {컨테이너명}  #4-2) yml의 개별 컨테이너 start/stop  
 $ docker-compose stop {컨테이너명}  
-$ docker  network ls   #5-1) 네트워크 목록확인    
-$ docker network inspect {network_id}   #5-2) 네트워크 정보 조회
-$ docker network rm {network_id}  #5-3) 네트워크 삭제  
+$ docker  network ls                #5-1) 네트워크 목록확인    
+$ docker network inspect {network_id} #5-2) 네트워크 정보 조회
+$ docker network rm {network_id}      #5-3) 네트워크 삭제  
 ```
 
 <br>
