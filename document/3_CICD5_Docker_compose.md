@@ -5,11 +5,11 @@
  : docker-compose.yml파일이 존재하는곳에서 compose 명령어 사용가능  
 
 #### 1.프로세스 목록 확인
-$ docker-compose ps  
+''' $ docker-compose ps  '''
 
 #### 2.컨테이너 이미지 생성(build)
 2-1) yml에 선언된 컨테이너 하나만 빌드하는 경우  
-$ docker-compose build {컨테이너명}  
+''' $ docker-compose build {컨테이너명}  '''
 2-2) 전체 빌드  
 $ docker-compose build  
  
