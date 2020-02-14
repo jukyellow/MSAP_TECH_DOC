@@ -34,13 +34,13 @@ appender.rolling.strategy.action.condition.nested_condition.type = IfAccumulated
 appender.rolling.strategy.action.condition.nested_condition.exceeds = 2GB
 ################################################
 ```
-
 <br>
+
 ### 2. 도커 컨테이너 stdout 로그: 도커 컨테이너 구동 application→ stdout(표준출력 로그)→ host의 /var/lib/docker/containers/하위에 저장됨  
 - log-driver 설정으로 관리하는 방법(1):  도커 컨테이너 실행시 명령어 세팅 or compose파일에 정의  
 - host서버 rotate설정으로 관리하는 방법(2): logrotate설정하여 관리  
-
 <br>
+
 ### 3. 호스트 서버 LogRotate설정
 ```
 $ sudo vi /etc/logrotate.d/docker-container
