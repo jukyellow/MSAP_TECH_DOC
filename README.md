@@ -63,6 +63,8 @@
 #### 1. [Docker](https://github.com/jukyellow/Msap-Tech-Doc/blob/master/document/3_CICD1_%EB%8F%84%EC%BB%A4.md "Docker")
 #### 2. [Docker 명령어](https://github.com/jukyellow/msa-side-proj/blob/master/document/3_CICD3_Docker_%EB%AA%85%EB%A0%B9%EC%96%B4%EB%AA%A8%EC%9D%8C.md)
 #### 3. [Docker DATA 관리(Logging,Volumn,Rotate,LocalTime)](https://github.com/jukyellow/msa-side-proj/blob/master/document/3_CICD4_Docker_Data%EA%B4%80%EB%A6%AC.md)  
+#### 3-2. [컨테이너 로그관리](
+https://github.com/jukyellow/msa-side-proj/blob/master/document/3_CICD4_2_%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88_%EB%A1%9C%EA%B7%B8%EA%B4%80%EB%A6%AC.md)
 #### 4. [Docker Compose](https://github.com/jukyellow/msa-side-proj/blob/master/document/3_CICD5_Docker_compose.md)  
 
 ### 운영환경
